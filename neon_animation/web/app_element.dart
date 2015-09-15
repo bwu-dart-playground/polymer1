@@ -13,7 +13,7 @@ import 'package:polymer_elements/paper_input.dart';
 @PolymerRegister('app-element')
 class AppElement extends PolymerElement
     with
-        CustomElementProxyMixin,
+//        CustomElementProxyMixin,
         PolymerBase,
         NeonAnimatableBehavior,
         NeonAnimationRunnerBehavior {
@@ -29,10 +29,13 @@ class AppElement extends PolymerElement
 
   @override
   void attached() {
-    animationConfig = {
-      'value': () {
-        var squareNode = Polymer.dom(root).querySelector('.square');
-        return {
+  }
+
+  void ready() {
+    var squareNode = Polymer.dom(root).querySelector('.square');
+    animationConfig = jsValue({
+//      'value': () {
+//        return {
           'entry': [
             {
               'name': 'transform-animation',
@@ -42,12 +45,12 @@ class AppElement extends PolymerElement
             },
             {'name': 'fade-in-animation', 'node': squareNode}
           ]
-        };
-      }
-    };
-  }
+        });
+//      }
+//    };
 
-  void ready() => play();
+    play();
+  }
 
   void play() {
     updateAnimation();
@@ -55,7 +58,7 @@ class AppElement extends PolymerElement
   }
 
   void updateAnimation() {
-    var entryAnimation = this.animationConfig['entry'][0];
+    var entryAnimation = animationConfig['entry'][0];
 
     if (rotateFrom != null && rotateFrom != 0) {
       entryAnimation['transformFrom'] = (entryAnimation['transformFrom']
