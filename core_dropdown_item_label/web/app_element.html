@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+
+<dom-module id='app-element'>
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      #years-dropdown::content div.dropdown-frame {
+        display: block;
+        /*opacity: 100;*/
+        background-color: white;
+        border: 3px solid gray;
+      }
+    </style>
+
+
+    <div flex layout vertical self-center
+         id='years-div'>
+      <input required
+             id='birthday'
+             name='birthday'
+             type='date'
+             value="{{age.birthday::change}}"
+             on-change='inputHandler'
+      >
+
+      <button id="dropdown-button" on-click="openDropdown">Years</button></div>
+
+    <iron-dropdown id='years-dropdown'
+                   horizontalAlign="right"
+                   verticalAlign="bottom"
+                   positionTarget="[[getElement('dropdown-button')]]"
+                   verticalOffset="100">
+      <!--vertical-offset="40px" -->
+      <div class="dropdown-content">
+        <div class="dropdown-frame">
+          <template is="dom-repeat" items="{{yearsList}}">
+            <paper-item>[[item]]</paper-item>
+          </template>
+        </div>
+      </div>
+    </iron-dropdown>
+
+    <!--<div layout horizontal>-->
+      <!--<div layout vertical self-center-->
+           <!--id='years-div'>Years-->
+        <!--<core-dropdown  disabled-->
+                        <!--id='years-core-ddwn'-->
+                        <!--halign="left"-->
+                        <!--label='0'-->
+                        <!--valueattr="label" selected="{{age.years}}">-->
+          <!--<template repeat="{{year in yearsList}}">-->
+            <!--<paper-item label="{{year}}"></paper-item>-->
+          <!--</template>-->
+        <!--</core-dropdown>-->
+      <!--</div>-->
+    <!--</div>-->
+  </template>
+  <script type="application/dart" src="app_element.dart"></script>
+</dom-module>

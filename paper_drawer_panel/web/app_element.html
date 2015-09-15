@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+
+<!--<link rel="import" href="../../packages/polymer_elements/paper_styles_classes.html">-->
+
+<dom-module id='app-element'>
+  <link rel="import" type="css" href="styles.css">
+  <template>
+    <paper-drawer-panel responsiveWidth="600px" id="drawerPanel">
+
+      <paper-header-panel drawer>
+        <paper-toolbar><span>My notes</span></paper-toolbar>
+      </paper-header-panel>
+
+      <paper-header-panel main>
+        <paper-toolbar>
+          <paper-icon-button icon="menu" on-click="toggleDrawer"></paper-icon-button>
+          <span class="title">My notes</span>
+          <paper-icon-button icon="search"></paper-icon-button>
+          <paper-icon-button icon="more-vert" justify="right"></paper-icon-button>
+        </paper-toolbar>
+      </paper-header-panel>
+
+    </paper-drawer-panel>
+  </template>
+  <script type='application/dart' src='app_element.dart'></script>
+</dom-module>
