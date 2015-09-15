@@ -8,6 +8,8 @@ import 'package:polymer_elements/neon_animatable_behavior.dart';
 import 'package:polymer_elements/neon_animation_runner_behavior.dart';
 import 'package:polymer_elements/paper_styles.dart';
 import 'package:polymer_elements/paper_input.dart';
+import 'package:polymer_elements/neon_animation/animations/fade_in_animation.dart';
+import 'package:polymer_elements/neon_animation/animations/transform_animation.dart';
 
 /// [PaperInput]
 @PolymerRegister('app-element')
@@ -28,24 +30,23 @@ class AppElement extends PolymerElement
   }
 
   @override
-  void attached() {
-  }
+  void attached() {}
 
   void ready() {
     var squareNode = Polymer.dom(root).querySelector('.square');
-    animationConfig = jsValue({
+    animationConfig = {
 //      'value': () {
 //        return {
-          'entry': [
-            {
-              'name': 'transform-animation',
-              'transformFrom': 'scale(.9) translateY(100px)',
-              'transformTo': 'scale(1) translateY(0)',
-              'node': squareNode
-            },
-            {'name': 'fade-in-animation', 'node': squareNode}
-          ]
-        });
+      'entry': [
+        {
+          'name': 'transform-animation',
+          'transformFrom': 'scale(.9) translateY(100px)',
+          'transformTo': 'scale(1) translateY(0)',
+          'node': squareNode
+        },
+        {'name': 'fade-in-animation', 'node': squareNode}
+      ]
+    };
 //      }
 //    };
 
