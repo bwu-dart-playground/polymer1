@@ -1,4 +1,4 @@
-name: _template
+name: iron_icon_transition
 environment:
   sdk: ">=1.2.0 <2.0.0"
 
@@ -32,10 +32,6 @@ dependency_overrides:
     path: '../../../dart-lang/reflectable/reflectable'
 
 transformers:
-#- polymer:
-#    entry_points:
-#    - web/index.html
-
 - web_components:
     entry_points:
     - web/index.html

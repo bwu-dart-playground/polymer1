@@ -26,7 +26,7 @@ main() async {
   templateJs['buttonTap'] = model.buttonTap;
 }
 
-@jsProxyReflectable
+//@jsProxyReflectable
 class MyModel extends JsProxy {
   String value = 'something';
 
