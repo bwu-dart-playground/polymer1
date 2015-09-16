@@ -14,29 +14,15 @@ import 'package:polymer_elements/neon_animation/animations/transform_animation.d
 /// [PaperInput]
 @PolymerRegister('app-element')
 class AppElement extends PolymerElement
-    with
-//        CustomElementProxyMixin,
-        PolymerBase,
-        NeonAnimatableBehavior,
-        NeonAnimationRunnerBehavior {
+    with PolymerBase, NeonAnimatableBehavior, NeonAnimationRunnerBehavior {
   AppElement.created() : super.created();
 
   @property String rotateFrom = '10';
   @property String rotateTo = '100';
 
-  @eventHandler
-  void animateMe([_, __]) {
-    play();
-  }
-
-  @override
-  void attached() {}
-
   void ready() {
     var squareNode = Polymer.dom(root).querySelector('.square');
     animationConfig = {
-//      'value': () {
-//        return {
       'entry': [
         {
           'name': 'transform-animation',
@@ -47,9 +33,12 @@ class AppElement extends PolymerElement
         {'name': 'fade-in-animation', 'node': squareNode}
       ]
     };
-//      }
-//    };
 
+    play();
+  }
+
+  @eventHandler
+  void animateMe([_, __]) {
     play();
   }
 

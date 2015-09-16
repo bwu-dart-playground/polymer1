@@ -1,4 +1,4 @@
-library core_dropdown_item_label.app_element;
+library iron_dropdown.app_element;
 
 import 'dart:html';
 import 'package:polymer/polymer.dart';

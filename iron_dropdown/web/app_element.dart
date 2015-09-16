@@ -1,11 +1,12 @@
 @HtmlImport('app_element.html')
-library core_dropdown_item_label.app_element;
+library iron_dropdown.app_element;
 
 import 'dart:html' as dom;
 import 'package:web_components/web_components.dart' show HtmlImport;
 import 'package:polymer/polymer.dart';
 import 'package:polymer_elements/iron_dropdown.dart';
 import 'package:polymer_elements/paper_item.dart';
+import 'package:polymer_elements/iron_flex_layout.dart';
 
 /// [IronDropdown] [PaperItem]
 @PolymerRegister('app-element')
@@ -20,9 +21,8 @@ class AppElement extends PolymerElement {
 
   @eventHandler
   void openDropdown([_, __]) {
-    final dd = $['years-dropdown'];
-    (dd as IronDropdown).positionTarget = $['dropdown-button'];
-    dd.open();
+    ($['years-dropdown'] as IronDropdown).open();;
+//    (dd as IronDropdown).positionTarget = $['dropdown-button'];
   }
 
   @eventHandler
