@@ -1,4 +1,4 @@
-library _template.app_element;
+library _template.web;
 
 //import 'dart:html';
 import 'package:polymer/polymer.dart';

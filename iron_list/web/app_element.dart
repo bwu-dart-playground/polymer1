@@ -4,7 +4,7 @@ library iron_list.app_element;
 import 'dart:html' as dom;
 import 'package:web_components/web_components.dart' show HtmlImport;
 import 'package:polymer/polymer.dart' /*hide Foo*/;
-//import 'package:polymer_elements/iron_list.dart';
+import 'package:polymer_elements/iron_list.dart';
 //import 'foo.dart';
 
 /// [IronList]
