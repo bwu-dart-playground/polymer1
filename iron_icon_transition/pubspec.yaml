@@ -3,33 +3,13 @@ environment:
   sdk: ">=1.2.0 <2.0.0"
 
 dependencies:
-  web_components: '^0.12.0+2'
-  polymer:
-    git:
-      url: git@github.com:dart-lang/polymer-dart.git
-#      ref: 0.17-0-dev-interop-reverse
-      ref: behaviors
-
-  polymer_elements:
-    git: git@github.com:dart-lang/polymer_elements.git
-  reflectable:
-    path: '../../../dart-lang/reflectable/reflectable'
+  polymer: 1.0.0-rc.2
+  polymer_elements: 1.0.0-rc.2
+  reflectable: 0.3.2
+  web_components: ^0.12.0
 
 dev_dependencies:
   test: ^0.12.3
-
-dependency_overrides:
-  analyzer: '^0.26.0'
-  polymer_interop:
-    git:
-      ref: 0.2.0-dev
-      url: https://github.com/dart-lang/polymer_interop.git
-  polymer:
-    git:
-      url: git@github.com:dart-lang/polymer-dart.git
-      ref: behaviors
-  reflectable:
-    path: '../../../dart-lang/reflectable/reflectable'
 
 transformers:
 - web_components:
@@ -40,10 +20,10 @@ transformers:
     entry_points:
     - web/index.dart
 
-- test/pub_serve:
-    $include: test/**_test{.*,}.dart
+#- test/pub_serve:
+#    $include: test/**_test{.*,}.dart
 
 - $dart2js:
     minify: true
-    $include: "**/*.polymer.bootstrap.dart"
+    $include: '**/*.bootstrap.initialize.dart'
 

@@ -1,5 +1,5 @@
-<link rel="import" href="packages/polymer/polymer.html">
 <dom-module id="my-select" >
+  <template>
     <style>
       :host {
         display: block;
@@ -23,10 +23,8 @@
         background-color: #666;
       }*/
     </style>
-  <template>
     <div class='container'>Show content:<span>[[text]]</span>
       <div id="editable" contenteditable="true" on-input="inputHandler" on-blur="blurHandler">[[text]]</div>
     </div>
   </template>
-  <script type='application/dart' src='my_select.dart'></script>
 </dom-module>

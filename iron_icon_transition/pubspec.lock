@@ -96,7 +96,7 @@ packages:
   polymer:
     description:
       ref: behaviors
-      resolved-ref: "36f802b2e1dffe94abf069b8a31f94b34e3fe245"
+      resolved-ref: b11c5c2ef63361672f8478a934692616d5ade58a
       url: "git@github.com:dart-lang/polymer-dart.git"
     source: git
     version: "0.17.0-dev"
@@ -110,7 +110,7 @@ packages:
   polymer_interop:
     description:
       ref: "0.2.0-dev"
-      resolved-ref: b99fc3991b378d30414565eb255a34ed3a326159
+      resolved-ref: f104d1bd4bea355131e9ca0b9c4df2c3dd4ba13e
       url: "https://github.com/dart-lang/polymer_interop.git"
     source: git
     version: "0.2.0"
@@ -121,12 +121,10 @@ packages:
   pub_semver:
     description: pub_semver
     source: hosted
-    version: "1.2.1"
+    version: "1.2.2"
   reflectable:
-    description:
-      path: "../../../dart-lang/reflectable/reflectable"
-      relative: true
-    source: path
+    description: reflectable
+    source: hosted
     version: "0.2.0"
   shelf:
     description: shelf
@@ -163,7 +161,7 @@ packages:
   test:
     description: test
     source: hosted
-    version: "0.12.4+7"
+    version: "0.12.4+8"
   utf:
     description: utf
     source: hosted

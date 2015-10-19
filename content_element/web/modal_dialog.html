@@ -1,13 +1,12 @@
-<link rel="import" href="packages/polymer/polymer.html">
 <dom-module id="modal-dialog" >
-  <link rel="stylesheet" href="packages/bootjack/css/bootstrap.css">
-  <style>
-    * {
-      display: block;
-      border: solid 3px red;
-    }
-  </style>
   <template>
+    <link rel="stylesheet" href="packages/bootjack/css/bootstrap.css">
+    <style>
+      * {
+        display: block;
+        border: solid 3px red;
+      }
+    </style>
     <button on-click="show">jo</button>
     <div id="modal" class="modal fade" tabindex="-1" role="dialog">
       <div class="modal-dialog">
@@ -26,5 +25,4 @@
       </div>
     </div>
   </template>
-  <script type="application/dart" src="modal_dialog.dart"></script>
 </dom-module>

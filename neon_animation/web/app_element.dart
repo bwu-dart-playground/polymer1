@@ -37,7 +37,7 @@ class AppElement extends PolymerElement
     play();
   }
 
-  @eventHandler
+  @reflectable
   void animateMe([_, __]) {
     play();
   }

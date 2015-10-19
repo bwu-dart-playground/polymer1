@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<dom-module id='app-element'>
+  <template>
+    <style>
+      input:invalid {
+        border: 3px solid red;
+      }
+    </style>
+    <div>
+      <input type="number" value="[[intValue]]"
+             on-input="convertToInt" notify-path="intValue">
+      <input type="number" value="[[intValue]]"
+             on-input="convertToInt" notify-path="intValue">
+    </div>
+    <div>
+      <input type="number" value="{{intValue2::change}}">
+      <span>[[intValue2]]</span>
+
+      <input type="number" value="{{intValue2::change}}">
+    </div>
+
+    <div>
+      <input type="number" value="[[model.quantity]]"
+             on-input="convertToInt" notify-path="model.quantity">
+      <input type="number" value="[[model.quantity]]"
+             on-input="convertToInt" notify-path="model.quantity">
+
+    </div>
+  </template>
+</dom-module>

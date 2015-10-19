@@ -11,7 +11,7 @@ class MySelect extends PolymerElement {
 
   MySelect.created() : super.created();
 
-  @eventHandler
+  @reflectable
   void textChanged(newValue, _) {
     print('currentIndexChange: ${newValue}');
   }
@@ -22,13 +22,13 @@ class MySelect extends PolymerElement {
     _editable = $['editable'];
   }
 
-  @eventHandler
+  @reflectable
   inputHandler(e, [_]) {
     set('text', _editable.innerHtml);
     print(text);
   }
 
-  @eventHandler
+  @reflectable
   blurHandler(e, [_]) {
     print('x');
   }
