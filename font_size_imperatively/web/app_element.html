@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<dom-module id='app-element'>
+  <template>
+    <style>
+      :root {
+        --my-theme-font-size: 100%;
+
+        /*--paper-button: {*/
+          /*font-size: var(--my-theme-font-size);*/
+        /*};*/
+
+        /*--paper-tabs: {*/
+          /*font-size: var(--my-theme-font-size);*/
+        /*}*/
+      }
+
+      paper-button {
+        --paper-button: {
+          font-size: var(--my-theme-font-size);
+        };
+      }
+      paper-tabs {
+        --paper-tabs: {
+          font-size: var(--my-theme-font-size);
+        }
+      }
+    </style>
+    <paper-button on-click="handleBigger" raised>bigger</paper-button>
+    <paper-header-panel>
+      <paper-toolbar class="paper-header">
+        <paper-tabs selected="0">
+          <paper-tab>TAB 1</paper-tab>
+          <paper-tab>TAB 2</paper-tab>
+          <paper-tab>TAB 3</paper-tab>
+        </paper-tabs>
+      </paper-toolbar>
+    </paper-header-panel>
+  </template>
+</dom-module>

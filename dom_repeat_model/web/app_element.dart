@@ -32,6 +32,6 @@ class AppElement extends PolymerElement {
     // First model
 //    ($['firstRepeat'] as DomRepeat).modelForElement(event.target);
     print(new PolymerEvent(event).localTarget.dataset['index']);
-    print(($['lista_produtos'] as DomRepeat).modelForElement(event.target).jsElement['index']);
+    print(($['lista_produtos'] as DomRepeat).modelForElement(event.target).index);
   }
 }

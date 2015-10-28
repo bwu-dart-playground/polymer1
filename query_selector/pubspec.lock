@@ -4,7 +4,7 @@ packages:
   analyzer:
     description: analyzer
     source: hosted
-    version: "0.26.1+3"
+    version: "0.26.1+14"
   args:
     description: args
     source: hosted
@@ -37,6 +37,10 @@ packages:
     description: collection
     source: hosted
     version: "1.1.3"
+  convert:
+    description: convert
+    source: hosted
+    version: "1.0.0"
   crypto:
     description: crypto
     source: hosted
@@ -44,7 +48,7 @@ packages:
   csslib:
     description: csslib
     source: hosted
-    version: "0.12.1"
+    version: "0.12.2"
   dart_style:
     description: dart_style
     source: hosted
@@ -64,7 +68,7 @@ packages:
   http_parser:
     description: http_parser
     source: hosted
-    version: "1.0.0"
+    version: "1.1.0"
   initialize:
     description: initialize
     source: hosted
@@ -72,7 +76,7 @@ packages:
   logging:
     description: logging
     source: hosted
-    version: "0.11.1+1"
+    version: "0.11.2"
   matcher:
     description: matcher
     source: hosted
@@ -94,35 +98,33 @@ packages:
     source: hosted
     version: "0.1.0"
   polymer:
-    description:
-      ref: aea190df60e6c9d20078d89919443dea8e1b1997
-      resolved-ref: aea190df60e6c9d20078d89919443dea8e1b1997
-      url: "https://github.com/dart-lang/polymer-dart.git"
-    source: git
-    version: "0.17.0-dev"
+    description: polymer
+    source: hosted
+    version: "1.0.0-rc.3"
+  polymer_elements:
+    description: polymer_elements
+    source: hosted
+    version: "1.0.0-rc.2"
   polymer_interop:
-    description:
-      ref: "0.2.0-dev"
-      resolved-ref: f104d1bd4bea355131e9ca0b9c4df2c3dd4ba13e
-      url: "https://github.com/dart-lang/polymer_interop.git"
-    source: git
-    version: "0.2.0"
+    description: polymer_interop
+    source: hosted
+    version: "1.0.0-rc.2"
   pool:
     description: pool
     source: hosted
-    version: "1.1.0"
+    version: "1.2.0"
   pub_semver:
     description: pub_semver
     source: hosted
-    version: "1.2.1"
+    version: "1.2.2"
   reflectable:
     description: reflectable
     source: hosted
-    version: "0.2.0"
+    version: "0.3.3"
   shelf:
     description: shelf
     source: hosted
-    version: "0.6.3"
+    version: "0.6.3+1"
   shelf_static:
     description: shelf_static
     source: hosted
@@ -142,7 +144,7 @@ packages:
   source_span:
     description: source_span
     source: hosted
-    version: "1.2.0"
+    version: "1.2.1"
   stack_trace:
     description: stack_trace
     source: hosted
@@ -154,7 +156,11 @@ packages:
   test:
     description: test
     source: hosted
-    version: "0.12.4+8"
+    version: "0.12.5+1"
+  typed_data:
+    description: typed_data
+    source: hosted
+    version: "1.0.0"
   utf:
     description: utf
     source: hosted
@@ -178,4 +184,4 @@ packages:
   yaml:
     description: yaml
     source: hosted
-    version: "2.1.5"
+    version: "2.1.7"

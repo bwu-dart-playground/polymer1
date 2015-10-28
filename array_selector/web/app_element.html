@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<dom-module id="app-element">
+  <template>
+    <style>
+      .item {
+        border: solid 1px green;
+      }
+    </style>
+    <div> Employee list: </div>
+    <template is="dom-repeat" id="employeeList" items="{{employees}}">
+        <div class="item">
+          <div>First name: <span>{{item.first}}</span></div>
+          <div>Last name: <span>{{item.last}}</span></div>
+          <button on-click="toggleSelection">Select</button>
+        </div>
+    </template>
+
+    <array-selector id="selector" items="{{employees}}"
+                    selected="{{selected}}" multi toggle></array-selector>
+
+    <div> Selected employees: </div>
+    <template is="dom-repeat" items="{{selected}}">
+        <div>First name: <span>{{item.first}}</span></div>
+        <div>Last name: <span>{{item.last}}</span></div>
+    </template>
+
+  </template>
+</dom-module>

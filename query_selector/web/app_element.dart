@@ -12,7 +12,7 @@ import 'package:polymer/polymer.dart';
 class AppElement extends PolymerElement {
   AppElement.created() : super.created();
 
-  @eventHandler
+  @reflectable
   clickHandler(_,__) {
     print(r'$["shadow1"]');
     print('  ${$["shadow1"].id}');

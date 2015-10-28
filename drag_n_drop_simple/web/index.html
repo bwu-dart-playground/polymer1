@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+  <head>
+    <style>
+      #dropzone {
+        position: absolute;
+        top: 50px;
+        left: 50px;
+        width: 300px;
+        height: 150px;
+        border: solid 1px lightgreen;
+      }
+      #dropzone.droptarget {
+        background-color: lime;
+      }
+    </style>
+  </head>
+  <body>
+    <input type='button' id='drag' class='draggable' value='drag me'
+           draggable='true'>
+
+    <div id="dropzone"></div>
+    <script type="application/dart" src="index.dart"></script>
+    <script src="packages/browser/dart.js"></script>
+  </body>
+</html>
