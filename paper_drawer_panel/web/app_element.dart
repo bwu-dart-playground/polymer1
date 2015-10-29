@@ -17,7 +17,7 @@ import 'package:polymer_elements/paper_icon_button.dart';
 class AppElement extends PolymerElement {
   AppElement.created() : super.created();
 
-  @eventHandler
+  @reflectable
   void toggleDrawer() {
     ($['drawerPanel'] as PaperDrawerPanel).togglePanel();
   }

@@ -20,7 +20,7 @@ class ModalDialog extends PolymerElement {
     modal = Modal.wire($['modal']);
   }
 
-  @eventHandler
+  @reflectable
   void show([_, __]){
     modal.show();
   }

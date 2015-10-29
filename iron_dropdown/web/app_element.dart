@@ -19,19 +19,19 @@ class AppElement extends PolymerElement {
 //  @Property(notify: true, observer: 'inputHandler')
   @property var age = new Age();
 
-  @eventHandler
+  @reflectable
   void openDropdown([_, __]) {
     ($['years-dropdown'] as IronDropdown).open();;
 //    (dd as IronDropdown).positionTarget = $['dropdown-button'];
   }
 
-  @eventHandler
+  @reflectable
   dom.Element getElement(String id) {
     print('getElement $id');
     return $[id];
   }
 
-  @eventHandler
+  @reflectable
   void inputHandler([_,__]) {
     print('inputHandler ${$['birthday'].value}, age.birthday: ${age.birthday}');
     if (age.birthday != '') {

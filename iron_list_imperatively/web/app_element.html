@@ -16,11 +16,11 @@
   </style>
   <template>
     <div>selected: <span>{{selected.name}}</span></div>
-    <iron-list items="{{data}}" selected-item="{{selected}}" selection-enabled="true">
-      <template>
-        <!--yyy<span>{{item.name}}<span></span>zzz-->
-        <foo-element foo="{{item}}"></foo-element>
-      </template>
-    </iron-list>
+    <div id="placeholder"></div>
+    <!--<iron-list items="{{data}}" selected-item="{{selected}}" selection-enabled="true">-->
+      <!--<template>-->
+        <!--<foo-element foo="{{item}}"></foo-element>-->
+      <!--</template>-->
+    <!--</iron-list>-->
   </template>
 </dom-module>

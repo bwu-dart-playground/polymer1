@@ -9,7 +9,7 @@ import 'package:polymer_elements/paper_menu.dart';
 import 'package:polymer_elements/paper_item.dart';
 import 'package:polymer_elements/iron_icons.dart';
 
-/// [PaperIconButton] [PaperMenuButton] [IronIcons] [PaperMenu] [PaperItem]
+/// [PaperIconButton], [PaperMenuButton], [IronIcons], [PaperMenu], [PaperItem]
 @PolymerRegister('app-element')
 class AppElement extends PolymerElement {
   AppElement.created() : super.created();

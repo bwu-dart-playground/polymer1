@@ -32,8 +32,8 @@ abstract class DraggableBehavior implements PolymerBase {
   int _clientY;
 
   Map _detail(CustomEventWrapper e) => ({
-        'clientX': e.client.x,
-        'clientY': e.client.y,
+        'clientX': e.detail['x'],
+        'clientY': e.detail['y'],
         // relatedTarget: element,
         'dragType': opts.dragType,
         'data': opts.data,
@@ -106,8 +106,12 @@ abstract class DraggableBehavior implements PolymerBase {
 
   void _onMouseOver(dom.MouseEvent e) {}
 
+  int x = 0;
   void _updateDragProxy(dom.Element proxy, dom.Rectangle<int> bounds) {
 //        var style = this.$.proxy.style;
+  if(bounds.width == 0) {
+    print('x');
+  }
     proxy.style
 //      ..display = 'block'
       ..top = '${bounds.top}px'
@@ -145,8 +149,8 @@ abstract class DraggableBehavior implements PolymerBase {
                         (this as dom.Element).offsetWidth,
                         (this as dom.Element).offsetHeight));
               })
-              ..onDragEvents = (() => print('dragEvents'))
-              ..onDragEnd = (() {
+              ..onDragEvents = ((e) => print('dragEvents'))
+              ..onDragEnd = ((e) {
                 print('dragEnd');
                 dragProxy.remove();
               })
@@ -164,13 +168,11 @@ abstract class DraggableBehavior implements PolymerBase {
     }
   }
 
-  /**
-     * Starts a mouse drag operation.
-     *
-     * Given an initial client position at (clientX, clientY) and an
-     * initial drag position (startX, startY), onMove is called with new
-     * drag position.
-     */
+   /// Starts a mouse drag operation.
+   ///
+   /// Given an initial client position at (clientX, clientY) and an
+   /// initial drag position (startX, startY), onMove is called with new
+   /// drag position.
   void startDrag(int startX, int startY, int clientX, int clientY,
       {DragOptions dragOptions}) {
     this._dragOptions = dragOptions;

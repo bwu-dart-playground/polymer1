@@ -3,42 +3,29 @@ library iron_list.app_element;
 
 import 'dart:html' as dom;
 import 'package:web_components/web_components.dart' show HtmlImport;
-import 'package:polymer/polymer.dart' /*hide Foo*/;
+import 'package:polymer/polymer.dart';
 import 'package:polymer_elements/iron_list.dart';
-//import 'foo.dart';
+import 'foo.dart';
+import 'foo_element.dart';
 
-/// [IronList]
+/// [IronList], [FooElement]
 @PolymerRegister('app-element')
 class AppElement extends PolymerElement {
-  AppElement.created() : super.created() {
-//    data = _createData();
-  }
+  AppElement.created() : super.created();
 
-//  @property(observer: 'selectedxChanged')
-//  var selectedx;
-
-//  Map<int, Foo> _createData() {
-//    int index = 0;
-//    return new Map.fromIterable(
-//        <Foo>[new Foo('alpha'), new Foo('beta'), new Foo('gamma')],
-//        key: (e) => index++,
-//        value: (e) => e);
-//  }
+  @Property(observer: 'selectedChanged')
+  Foo selected;
 
   @property
-  List<Map> data = jsValue([
-    {'index': 0, 'item': {'name': 'a'}},
-    {'index': 1, 'item': {'name': 'b'}},
-    {'index': 2, 'item': {'name': 'c'}},
-    {'index': 3, 'item': {'name': 'd'}},
-  ]);
+  List<Foo> data = <Foo>[new Foo('alpha'), new Foo('beta'), new Foo('gamma')];
 
-//  selectedxChanged(oldVal, newVal) {
-//    print(newVal);
-//  }
-
-  @eventHandler
-  void activateHandler(dom.CustomEvent e) {
-    print(e.detail.data);
+  @reflectable
+  selectedChanged([oldVal, newVal]) {
+    print(newVal);
   }
+
+//  @reflectable
+//  void activateHandler(dom.CustomEvent e, [_]) {
+//    print((e.detail.data as Foo).name);
+//  }
 }
