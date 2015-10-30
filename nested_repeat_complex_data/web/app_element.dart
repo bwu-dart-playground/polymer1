@@ -94,6 +94,9 @@ class AppElement extends PolymerElement {
   }
 }
 
+/// the custom [id], [hashCode], and [==] might not be necessary, just comparing
+/// instance identity (default) might be sufficient. This depends on your use
+/// case.
 class Produto extends JsProxy {
   static int _id = 0;
   @reflectable
