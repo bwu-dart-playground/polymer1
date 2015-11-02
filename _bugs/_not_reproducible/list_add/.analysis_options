@@ -1,0 +1,19 @@
+analyzer:
+  strong-mode: true
+  language:
+    enableSuperMixins: true
+linter:
+  rules:
+    # see http://dart-lang.github.io/linter/lints/
+    - camel_case_types
+    - empty_constructor_bodies
+    - library_names
+    - super_goes_last
+    - type_init_formals
+    - slash_for_doc_comments
+    - library_prefixes
+#    - non_constant_identifier_names
+    - one_member_abstracts
+#    - unnecessary_brace_in_string_interp
+    - unnecessary_getters_setters
+    - package_names
