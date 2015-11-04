@@ -1,0 +1,16 @@
+<!doctype html>
+<html>
+  <head>
+    <script src="packages/web_components/webcomponents-lite.min.js"></script>
+    <!-- TODO(zoechi) themes should work with shadow DOM-->
+    <script>
+      window.Polymer = window.Polymer || {};
+      window.Polymer.dom = 'shadow';
+    </script>
+  </head>
+  <body>
+    <app-element></app-element>
+    <script type="application/dart" src="index.dart"></script>
+    <script src="packages/browser/dart.js"></script>
+  </body>
+</html>

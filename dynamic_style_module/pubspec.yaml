@@ -1,9 +1,9 @@
-name: conditional_style
+name: dynamic_style_module
 environment:
   sdk: ">=1.2.0 <2.0.0"
 
 dependencies:
-  polymer: ^1.0.0-rc.4
+  polymer: ^1.0.0-rc.5
   polymer_elements: ^1.0.0-rc.2
   reflectable: ^0.3.2
   web_components: ^0.12.0

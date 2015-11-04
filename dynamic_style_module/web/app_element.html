@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<dom-module id='app-element'>
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <button type="button" on-tap="changeThemeHandler">Change theme</button>
+
+    <some-element theme="{{theme}}"></some-element>
+  </template>
+</dom-module>
