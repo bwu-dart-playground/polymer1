@@ -62,8 +62,7 @@ class GridElement extends PolymerElement {
           final colHtml = new dom.DivElement()
             ..text = colConfig.name
             ..classes.addAll(<String>['cell', 'l$colNum', 'r$colNum']
-              ..addAll(colConfig.headerRowCssClasses as List<String>))
-            ..style.top = '${rowTop}px';
+              ..addAll(colConfig.headerRowCssClasses as List<String>));
           headerRowHtml.append(colHtml);
           colNum++;
         }
@@ -82,9 +81,7 @@ class GridElement extends PolymerElement {
             final colHtml = new dom.DivElement()
               ..text = row[colNum]?.toString() ?? ''
               ..classes.addAll(<String>['cell', 'l$colNum', 'r$colNum']
-                ..addAll(colConfig.cssClasses as List<String>))
-              ..style.top = '${rowTop}px';
-            ;
+                ..addAll(colConfig.cssClasses as List<String>));
             rowHtml.append(colHtml);
             colNum++;
           }
@@ -103,18 +100,24 @@ class GridElement extends PolymerElement {
       new PolymerDom(root).removeChild(oldStyle);
     }
 
-    final style = new dom.StyleElement()..id = gridUniqueId;
-    new PolymerDom(root).append(style);
-    PolymerDom.flush();
-    final dom.CssStyleSheet stylesheet = style.sheet;
 
     int colNum = 0;
-    int gridLeft = $$('.grid').contentEdge.left;
+    int gridLeft = 0;
     int ruleNum = 0;
+    final rules = <String>[];
     for (final colConfig in columnConfig) {
-      stylesheet.insertRule('.l$colNum { left: ${gridLeft}px; width: ${colConfig.width}px; }', ruleNum++);
+        rules.add('.l$colNum { left: ${gridLeft}px; width: ${colConfig.width}px; }');
       gridLeft += colConfig.width + 11;
       colNum++;
     }
+
+    final style = new dom.StyleElement()..id = gridUniqueId;
+    style.text = rules.join('\n');
+    new PolymerDom(root).append(style);
+//    root.append(style);
+    PolymerDom.flush();
+//    final dom.CssStyleSheet stylesheet = style.sheet;
+    updateStyles();
+
   }
 }

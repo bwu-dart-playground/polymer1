@@ -2,6 +2,10 @@
 <dom-module id='grid-element'>
   <template>
     <style>
+      .grid .row,
+      .grid .header-row {
+        position: absolute;
+      }
       .grid .cell {
         position: absolute;
         display: inline-block;
@@ -9,7 +13,6 @@
         text-overflow: ellipsis;
         white-space: nowrap;
       }
-
       #container {
         display: block;
       }

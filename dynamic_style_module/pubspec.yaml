@@ -24,7 +24,7 @@ transformers:
     $include: test/**_test{.*,}.dart
 
 - $dart2js:
-    minify: true
+    minify: false
     $include: '**/*.bootstrap.initialize.dart'
     #$include: "**/*.polymer.bootstrap.dart"
 
