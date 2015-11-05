@@ -84,23 +84,23 @@ class GridElement extends PolymerElement {
   }
 
   void updateCellPositionRules() {
-    final oldStyle = dom.document.head.querySelector('style#$gridUniqueId');
+    final oldStyle = $['style#$gridUniqueId'];
     if (oldStyle != null) {
-      oldStyle.remove();
+      new PolymerDom($[root]).removeChild(oldStyle);
     }
+
     final style = new dom.StyleElement()..id = gridUniqueId;
-    dom.document.head.append(style);
+    new PolymerDom(root).append(style);
+    PolymerDom.flush();
     final dom.CssStyleSheet stylesheet = style.sheet;
 
     int colNum = 0;
     int left = 0;
     int ruleNum = 0;
     for (final colConfig in columnConfig) {
-      stylesheet.insertRule(
-          '#$gridUniqueId .l$colNum { left: ${left}px; }', ruleNum++);
+      stylesheet.insertRule('.l$colNum { left: ${left}px; }', ruleNum++);
       left += colConfig.width;
-      stylesheet.insertRule(
-          '#$gridUniqueId.r$colNum { right: ${left}px; }', ruleNum++);
+      stylesheet.insertRule('.r$colNum { right: ${left}px; }', ruleNum++);
       left += 10;
     }
     print(stylesheet.rules.length);
