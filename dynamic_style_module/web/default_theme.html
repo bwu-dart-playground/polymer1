@@ -9,6 +9,34 @@
       .style-me {
         border: solid 1px orange;
       }
+      .grid {
+        height: 300px;
+        font-family: 'Roboto', sans-serif;
+        font-size: 0.7em;
+        margin: 10px;
+        border: 1px dotted darkgray;
+      }
+      .grid .header-row .cell {
+        display: inline-block;
+        background-color: #ddd;
+        font-weight: bold;
+        text-align: justify;
+      }
+      .grid .cell{
+        display: inline-block;
+        border: 1px solid darkgray;
+        padding: 2px 5px 2px 5px;
+      }
+      .grid .row.odd {
+        background-color: #eee;
+      }
+      .grid .row .cell.align-right {
+        text-align: right;
+      }
+
+      .grid .row .cell.title {
+        color: red;
+      }
     </style>
     <div>my-theme</div>
   </template>

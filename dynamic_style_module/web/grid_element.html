@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<dom-module id='grid-element'>
+  <template>
+    <style>
+      /*.grid .header-row,*/
+      /*.grid .header-row .cell,*/
+      /*.gird .row,*/
+      .gird .row .cell {
+        position: relative;
+      }
+
+      .grid .cell {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      #container {
+        display: block;
+      }
+    </style>
+    <span id="placeholder"></span>
+    <div class="style-me">style-me some text</div>
+    <div>theme:<span>[[theme]]</span></div>
+
+    <div id="container"></div>
+  </template>
+</dom-module>
