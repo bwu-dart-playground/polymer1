@@ -102,6 +102,7 @@ class GridElement extends PolymerElement {
       left += colConfig.width;
       stylesheet.insertRule('.r$colNum { right: ${left}px; }', ruleNum++);
       left += 10;
+      colNum++;
     }
     print(stylesheet.rules.length);
   }
