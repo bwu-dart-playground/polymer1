@@ -45,38 +45,52 @@ class GridElement extends PolymerElement {
         container.removeChild(child);
       }
       final gridHtml = new dom.DivElement()..classes.add('grid');
+      container.append(gridHtml);
+      PolymerDom.flush();
       updateCellPositionRules();
 
+      final gridTop = gridHtml.contentEdge.top;
+      final int rowHeight = 19;
+
+      int rowNum = 0;
+
       if (data != null && columnConfig != null) {
+        int rowTop = gridTop + rowNum * rowHeight;
         final headerRowHtml = new dom.DivElement()..classes.add('header-row');
         int colNum = 0;
         for (final colConfig in columnConfig) {
           final colHtml = new dom.DivElement()
             ..text = colConfig.name
             ..classes.addAll(<String>['cell', 'l$colNum', 'r$colNum']
-              ..addAll(colConfig.headerRowCssClasses as List<String>));
+              ..addAll(colConfig.headerRowCssClasses as List<String>))
+            ..style.top = '${rowTop}px';
           headerRowHtml.append(colHtml);
           colNum++;
         }
         gridHtml.append(headerRowHtml);
 
-        int rowNum = 0;
         for (final row in data) {
+          rowNum++;
+          rowTop = gridTop + rowNum * rowHeight;
+
           final rowHtml = new dom.DivElement()
-            ..classes.addAll(['row', rowNum++ % 2 == 0 ? 'even' : 'odd']);
+            ..classes.addAll(['row', rowNum % 2 == 0 ? 'even' : 'odd'])
+            ..style.top = '${rowTop}px';
+
           colNum = 0;
           for (final colConfig in columnConfig) {
             final colHtml = new dom.DivElement()
               ..text = row[colNum]?.toString() ?? ''
               ..classes.addAll(<String>['cell', 'l$colNum', 'r$colNum']
-                ..addAll(colConfig.cssClasses as List<String>));
+                ..addAll(colConfig.cssClasses as List<String>))
+              ..style.top = '${rowTop}px';
+            ;
             rowHtml.append(colHtml);
             colNum++;
           }
           gridHtml.append(rowHtml);
         }
       }
-      container.append(gridHtml);
     } catch (e, s) {
       print(e);
       print(s);
@@ -84,9 +98,9 @@ class GridElement extends PolymerElement {
   }
 
   void updateCellPositionRules() {
-    final oldStyle = $['style#$gridUniqueId'];
+    final oldStyle = $$('style#$gridUniqueId');
     if (oldStyle != null) {
-      new PolymerDom($[root]).removeChild(oldStyle);
+      new PolymerDom(root).removeChild(oldStyle);
     }
 
     final style = new dom.StyleElement()..id = gridUniqueId;
@@ -95,15 +109,12 @@ class GridElement extends PolymerElement {
     final dom.CssStyleSheet stylesheet = style.sheet;
 
     int colNum = 0;
-    int left = 0;
+    int gridLeft = $$('.grid').contentEdge.left;
     int ruleNum = 0;
     for (final colConfig in columnConfig) {
-      stylesheet.insertRule('.l$colNum { left: ${left}px; }', ruleNum++);
-      left += colConfig.width;
-      stylesheet.insertRule('.r$colNum { right: ${left}px; }', ruleNum++);
-      left += 10;
+      stylesheet.insertRule('.l$colNum { left: ${gridLeft}px; width: ${colConfig.width}px; }', ruleNum++);
+      gridLeft += colConfig.width + 11;
       colNum++;
     }
-    print(stylesheet.rules.length);
   }
 }
