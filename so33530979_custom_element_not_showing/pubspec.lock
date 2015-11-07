@@ -114,7 +114,7 @@ packages:
   polymer_interop:
     description: polymer_interop
     source: hosted
-    version: "1.0.0-rc.4+1"
+    version: "1.0.0-rc.5"
   pool:
     description: pool
     source: hosted
