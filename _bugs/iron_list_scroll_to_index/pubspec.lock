@@ -100,7 +100,7 @@ packages:
   polymer:
     description: polymer
     source: hosted
-    version: "1.0.0-rc.5"
+    version: "1.0.0-rc.6"
   polymer_elements:
     description: polymer_elements
     source: hosted
@@ -108,7 +108,7 @@ packages:
   polymer_interop:
     description: polymer_interop
     source: hosted
-    version: "1.0.0-rc.4+2"
+    version: "1.0.0-rc.5"
   pool:
     description: pool
     source: hosted

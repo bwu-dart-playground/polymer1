@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<link rel="import"
+      href="http://www.polymer-project.org/1.0/samples/components/polymer/polymer.html">
+<dom-module id='grid-element'>
+  <template>
+    <style>
+      :host {
+        display: block;
+        border: solid 3px blue;
+        background-color: #eaeaea;
+
+      }
+      .grid .row,
+      .grid .header-row,
+      :host::content .grid .row,
+      :host::content .grid .header-row
+      {
+        position: absolute;
+      }
+      .grid .cell,
+      :host::content .grid .cell
+      {
+        position: absolute;
+        display: inline-block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .grid {
+        display: block;
+        height: 300px;
+        font-family: 'Roboto', sans-serif;
+        font-size: 0.7em;
+        margin: 10px;
+        /*border: 1px dotted darkgray;*/
+      }
+
+    </style>
+    <div class="style-me">style-me some text</div>
+    <div>theme:<span>[[theme]]</span></div>
+
+    <div id="container">
+      <div id="grid" class="grid"></div>
+    </div>
+    <span id="placeholder"></span>
+
+    <button on-tap="printTop">update</button>
+  </template>
+<script>
+  Polymer({
+    is: "grid-element",
+    properties: {
+      gridUniqueId: {
+        type: String,
+        value: 'grid1'
+      },
+      theme: {
+        type: String,
+        observer: 'themeChanged'
+      },
+      columnConfig: {
+        type: Array,
+        observer: 'rebuildGrid'
+      },
+      data: {
+        type: Array,
+        observer: 'rebuildGrid'
+      }
+    },
+
+    ready: function() {
+      console.log('ready: ' + this.$['grid'].offsetTop);
+    },
+
+
+    printTop: function() {
+      console.log('ready: ' + this.$['grid'].offsetTop);
+      this.rebuildGrid();
+    },
+
+    themeChanged: function(newValue, _) {
+      var root = Polymer.dom(this.root);
+      root
+          .querySelectorAll('[theme]')
+          .forEach(function (e) {
+            root.removeChild(e);
+          });
+      var newStyle = document.createElement('style', 'custom-style');
+      newStyle.setAttribute('theme', newValue);
+      newStyle.setAttribute('include',
+                newValue == null ? 'default-theme' : newValue);
+      root.insertBefore(newStyle,          this.$['placeholder']);
+      Polymer.dom.flush();
+  //    updateStyles();
+//      this.async(this.rebuildGrid);
+      this.rebuildGrid();
+      console.log('theme changed');
+    },
+
+    rebuildGrid: function() {
+      var grid = Polymer.dom(this.$['grid']);
+      grid.children.forEach(function (e) {
+        grid.removeChild(e);
+      });
+      // temporarily add to get position
+      Polymer.dom.flush();
+      if (!!this.data && !!this.columnConfig) {
+        var gridTop = grid.node.offsetTop;
+        console.log(gridTop);
+        this.updateCellPositionRules();
+
+        var rowHeight = 19;
+
+        var rowNum = 0;
+
+        var rowTop = gridTop + rowNum * rowHeight;
+        var headerRowHtml = document.createElement('div');
+        headerRowHtml.classList.add('header-row');
+        headerRowHtml.style.height = rowHeight + 'px';
+        var colNum = 0;
+        for (var colConfigIdx in this.columnConfig) {
+          var colConfig = this.columnConfig[colConfigIdx];
+          var colHtml = document.createElement('div');
+          colHtml.innerHTML = colConfig.name;
+          colHtml.classList.add('cell', 'l' + colNum, 'r' + colNum);
+          !!colConfig.headerRowCssClasses ? colConfig.cssClasses.forEach(function (c) {colHtml.classList.add(c);}) : null;
+          headerRowHtml.appendChild(colHtml);
+          colNum++;
+        }
+        grid.appendChild(headerRowHtml);
+
+        for (var rowIdx in this.data) {
+          var row = this.data[rowIdx];
+          rowNum++;
+          rowTop = gridTop + rowNum * rowHeight;
+
+          var rowHtml = document.createElement('div');
+          rowHtml.classList.add('row', rowNum % 2 === 0 ? 'even' : 'odd');
+          rowHtml.style.top = rowTop + 'px';
+          rowHtml.style.height = rowHeight + 'px';
+
+          colNum = 0;
+          for (var colConfigIdx in this.columnConfig) {
+            var colConfig = this.columnConfig[colConfigIdx];
+            var colHtml = document.createElement('div');
+            colHtml.innerHTML = row[colNum];
+            colHtml.classList.add('cell', 'l' + colNum, 'r' + colNum);
+            !!colConfig.cssClasses ? colConfig.cssClasses.forEach(function (c) {colHtml.classList.add(c);}) : null;
+            rowHtml.appendChild(colHtml);
+            colNum++;
+          }
+          grid.appendChild(rowHtml);
+        }
+      }
+      Polymer.dom.flush();
+//      updateStyles();
+    },
+
+    updateCellPositionRules: function() {
+      var oldStyle = this.$$('style#grid1');
+      if (!!oldStyle) {
+        Polymer.dom(this.root).removeChild(oldStyle);
+      }
+
+      var colNum = 0;
+      var gridLeft = 0;
+      var rules = [];
+      for (var colConfigIdx in this.columnConfig) {
+        var colConfig = this.columnConfig[colConfigIdx];
+        rules.push(
+            '.l' + colNum + ' { left: ' + gridLeft + 'px; width: ' + colConfig.width + 'px; }');
+        gridLeft += colConfig.width + 11;
+        colNum++;
+      }
+
+      var style = document.createElement('style');
+      style.id = this.gridUniqueId;
+      style.innerHTML = rules.join('\n');
+      Polymer.dom(this.root).appendChild(style);
+      Polymer.dom.flush();
+      this.updateStyles();
+    }
+  });
+  </script>
+</dom-module>

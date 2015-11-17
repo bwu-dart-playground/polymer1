@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<link rel="import"
+      href="http://www.polymer-project.org/1.0/samples/components/polymer/polymer.html">
+
+<dom-module id='default-theme'>
+  <template>
+    <style>
+      .grid,
+      :host::content .grid {
+        /*display: block;*/
+        /*height: 300px;*/
+        /*font-family: 'Roboto', sans-serif;*/
+        /*font-size: 0.7em;*/
+        /*margin: 10px;*/
+        border: 1px dotted darkgray;
+      }
+      .grid .header-row .cell,
+      :host::content .grid .header-row .cell {
+        background-color: #ddd;
+        font-weight: bold;
+        text-align: justify;
+      }
+      .grid .cell,
+      :host::content .grid .cell{
+        border: 1px solid darkgray;
+        padding: 2px 5px 2px 5px;
+      }
+      .grid .row.odd cell,
+      :host::content .grid .row.odd cell {
+        background-color: #eee;
+      }
+
+      /* using user-provided class-names in selectors */
+      .grid .row .cell.align-right,
+      :host::content .grid .row .cell.align-right {
+        text-align: right;
+      }
+      .grid .row .cell.title,
+      :host::content .grid .row .cell.title {
+        color: red;
+      }
+    </style>
+  </template>
+</dom-module>

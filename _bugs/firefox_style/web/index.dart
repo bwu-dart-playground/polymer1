@@ -1,4 +1,4 @@
-library dynamic_style_module.web;
+library firefox_style.web;
 
 import 'package:polymer/polymer.dart';
 import 'app_element.dart';

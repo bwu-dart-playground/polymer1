@@ -1,20 +1,21 @@
 <!--<!DOCTYPE html>-->
 <dom-module id='app-element'>
-  <style>
-    :host {
-      display: block;
-      width: 300px;
-      height: 180px;
-      border: 3px solid green;
-    }
-    iron-list {
-      display: block;
-      width: 150px;
-      height: 150px;
-      border: 3px solid red;
-    }
-  </style>
   <template>
+    <style>
+      :host {
+        display: block;
+        width: 300px;
+        height: 180px;
+        border: 3px solid green;
+      }
+      iron-list {
+        display: block;
+        width: 150px;
+        height: 150px;
+        border: 3px solid red;
+      }
+    </style>
+
     <div>selected: <span>{{selected.name}}</span></div>
     <iron-list items="{{data}}" selected-item="{{selected}}" selection-enabled="true">
       <template>

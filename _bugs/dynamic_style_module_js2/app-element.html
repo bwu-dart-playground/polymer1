@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<link rel="import" href="https://rawgit.com/Polymer/polymer/master/polymer.html">
+<link rel="import" href="default-theme.html">
+
+<dom-module id='app-element'>
+  <template>
+
+    <style is="custom-style" include="default-theme">
+    /*<style>*/
+      :host {
+        display: block;
+      }
+
+      /*:host ::content .new-element,*/
+      .new-element{
+         border: solid 3px rebeccapurple;
+         background-color: #aaaaaa;
+         color: red;
+       }
+    </style>
+
+    <!--<style include="default-theme"></style>-->
+    <button type="button" on-tap="addElement">Add element</button>
+
+    <div id="wrapper"></div>
+    <span>[[theme]]</span>
+  </template>
+
+  <script>
+    Polymer({
+      is: "app-element",
+
+      _count: 0,
+
+      addElement: function() {
+        var newElement = document.createElement('div');
+        newElement.innerHTML = 'New ' + this._count++;
+        newElement.classList.add('new-element');
+        this._count % 2 == 0 ? newElement.classList.add('even') : null;
+        Polymer.dom(this.$.wrapper).appendChild(newElement);
+      }
+    });
+  </script>
+
+</dom-module>
+
+
