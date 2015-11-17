@@ -1,7 +1,40 @@
 <!DOCTYPE html>
 <dom-module id='app-element'>
   <template>
+    <style>
+      #dd1 {
+        position: absolute;
+        top: 50px;
+        left: 500px;
+        width: 50px;
+        height: 500px;
+      }
+
+      #dd2 {
+        position: absolute;
+        top: 500px;
+        left: 50px;
+        width: 500px;
+        height: 50px;
+      }
+
+      [my-drop-target] {
+        opacity: 0.5;
+        border: solid 3px black;
+      }
+      [my-drop-target].drag-over {
+        border: solid 3px red;
+      }
+
+      [my-drop-target].drag-dropped {
+        background-color: lightgreen;
+      }
+    </style>
     <drag-me message="{{message}}" my-draggable="true"></drag-me>
     <div>Message: <span>{{message}}</span></div>
+    <div id="dd1" my-drop-target="true">drop target 1</div>
+    <div id="dd2" my-drop-target="true">drop target 2</div>
+    <div id="dd3" my-drop-target="true">drop target 3</div>
+    <div id="dd4" my-drop-target="true">drop target 4</div>
   </template>
 </dom-module>

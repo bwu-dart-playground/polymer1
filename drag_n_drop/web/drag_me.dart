@@ -16,29 +16,8 @@ class DragMe extends PolymerElement with DraggableBehavior {
 
   @reflectable
   void handleTrack(dom.CustomEvent event, [_]) {
-    dragHandler(event, _);
-//    print(event.detail['state']);
-//    switch (event.detail['state']) {
-//      case 'start':
-////        set('message', 'Tracking started!');
-//        startDrag(
-//            event.detail['x'],
-//            event.detail['y'],
-//            (event.target as dom.Element).clientLeft,
-//            (event.target as dom.Element).clientTop,
-//            dragOptions: (new DragOptions()
-//              ..onDragMove = ((x, y, detail) => print('dragMove'))
-//              ..onDragEvents = (() => print('dragEvents'))
-//              ..onDragEnd = (() => print('dragEnd'))
-//              ..dropTargetCheck = ((e) => e != this)));
-//        break;
-//      case 'track':
-////        set('message',
-////            'Tracking in progress... ${event.detail['x']},  ${event.detail['y']}');
-////        break;
-//      case 'end':
-////        set('message', 'Tracking ended!');
-////        break;
-//    }
+    // for gesture events see https://www.polymer-project.org/1.0/docs/devguide/events.html#gestures
+//    print(event.detail);
+    trackEventHandler(event, _);
   }
 }

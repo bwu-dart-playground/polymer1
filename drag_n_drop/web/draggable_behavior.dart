@@ -1,30 +1,45 @@
-import 'dart:async' show StreamController, StreamSubscription;
+//import 'dart:async' show StreamController, StreamSubscription;
 import 'dart:html' as dom;
 import 'package:polymer/polymer.dart';
 
 enum DragType { unknown }
 
 class DragOptions {
+  /// Called for track events with status == 'track' (while an element is dragged).
+  /// The current pointer position (`x`, `y`) and the original track event are
+  /// passed as arguments.
   DragMoveCallback onDragMove;
-  Function onDragEnd;
-  Function onDragEvents;
-  bool fireDragEvents = false;
+
+  /// Called for track events with status == 'end'. The original track event is
+  /// passed as argument.
+  DragEndCallback onDragEnd;
+
+  /// Fire `bwu-drag-enter`, `bwu-drag-over`, `bwu-drag-leave`, and
+  /// `bwu-drag-drop` events on valid drop-targets (dragged over elements where
+  /// [dropTargetCheck] returns `true`).
+  bool fireDragOverEvents = false;
+  // TODO(zoechi) What is it used for?
   Object data;
+  // TODO(zoechi) What is it used for?
   DragType dragType;
+
+  /// Called for dragged-over elements, to evaluate whether the element is a
+  /// valid drop target and fire `bwu-drag-enter`, `bwu-drag-over`,
+  /// `bwu-drag-leave` and `bwu-drag-drop`.
   DropTargetCheck dropTargetCheck;
 }
 
-typedef void DragMoveCallback(int x, int y, dom.Event detail);
+typedef void DragMoveCallback(int x, int y, dom.CustomEvent event);
+
 typedef bool DropTargetCheck(dom.Element target);
 
-abstract class DraggableBehavior implements PolymerBase {
-  Set<dom.Element> currentTargets = new Set();
+typedef void DragEndCallback(dom.CustomEvent event);
 
-  DragOptions opts = new DragOptions();
-  DragOptions get _dragOptions => opts;
-  set _dragOptions(DragOptions options) {
-    opts = options ?? new DragOptions();
-  }
+abstract class DraggableBehavior implements PolymerBase {
+  /// Elements below current drag position
+  Set<dom.Element> _currentTargets = new Set<dom.Element>();
+
+  DragOptions _dragOptions;
 
   int _startX;
   int _startY;
@@ -35,144 +50,130 @@ abstract class DraggableBehavior implements PolymerBase {
         'clientX': e.detail['x'],
         'clientY': e.detail['y'],
         // relatedTarget: element,
-        'dragType': opts.dragType,
-        'data': opts.data,
+        'dragType': _dragOptions.dragType,
+        'data': _dragOptions.data,
       });
 
-//  StreamSubscription _mouseMoveSubscription;
-//  StreamSubscription _mouseUpSubscription;
-//  StreamSubscription _contextMenuSubscription;
+  void _onTrack(dom.CustomEvent event) {
+    final deltaX = event.detail['dx'] + _clientX;
+    final deltaY = event.detail['dy'] + _clientY;
 
-  void _onMouseMove(dom.CustomEvent e) {
-    final deltaX = (e.detail['sourceEvent'] as dom.MouseEvent).client.x -
-        _clientX +
-        _startX;
-    final deltaY = (e.detail['sourceEvent'] as dom.MouseEvent).client.y -
-        _clientY +
-        _startY;
-
-    if (opts.onDragMove != null) {
-      opts.onDragMove(deltaX, deltaY, e);
+//    print('delta: X: ${deltaX}, Y: ${deltaY}');
+    if (_dragOptions.onDragMove != null) {
+      _dragOptions.onDragMove(deltaX, deltaY, event);
     }
 
-    if (opts.fireDragEvents) {
-      var dropTargets = elementsFromPoint(
-          (e.detail['sourceEvent'] as dom.MouseEvent).client.x,
-          (e.detail['sourceEvent'] as dom.MouseEvent).client.y).where(
-          (t) => opts.dropTargetCheck != null || opts.dropTargetCheck(t));
+    if (_dragOptions.fireDragOverEvents) {
+      print('hover: ${[event.detail['hover']()]}');
+      // TODO(zoechi) try to figure out where and if `elementsFromPoint` has
+      // advantages over `e.detail['hover']()`
+      final dropTargets = [event.detail['hover']()].where(
+//          elementsFromPoint(event.detail['x'], event.detail['y']).where(
+              (dom.Element t) => t != null && (_dragOptions == null ||
+                  _dragOptions.dropTargetCheck(t)));
 
-      final newTargets = new Set.from(dropTargets);
+      final newTargets = new Set<dom.Element>.from(dropTargets);
 
-      for (final target in currentTargets) {
+      for (final target in _currentTargets) {
         if (!newTargets.contains(target)) {
-          target.dispatchEvent(new dom.CustomEvent('designer-drag-leave',
-              detail: {'detail': _detail(e)}));
+          target.dispatchEvent(new dom.CustomEvent('bwu-drag-leave',
+              detail: {'detail': _detail(event)}));
         }
       }
 
       for (final target in dropTargets) {
-        if (!currentTargets.contains(target)) {
-          target.dispatchEvent(new dom.CustomEvent('designer-drag-enter',
-              detail: {'detail': _detail(e)}));
+        if (!_currentTargets.contains(target)) {
+//          target.attributes.forEach(print);
+
+          target.dispatchEvent(new dom.CustomEvent('bwu-drag-enter',
+              detail: {'detail': _detail(event)}));
         }
-        target.dispatchEvent(new dom.CustomEvent('designer-drag-move',
-            detail: {'detail': _detail(e)}));
+        target.dispatchEvent(new dom.CustomEvent('bwu-drag-move',
+            detail: {'detail': _detail(event)}));
       }
 
-      currentTargets = newTargets;
+      _currentTargets = newTargets;
     }
   }
 
-  void _onMouseUp(dom.CustomEvent e) {
-//    _mouseMoveSubscription.cancel();
-//    _mouseMoveSubscription = null;
-//    _mouseUpSubscription.cancel();
-//    _mouseUpSubscription = null;
-//    _contextMenuSubscription.cancel();
-//    _contextMenuSubscription = null;
-
-    if (opts.onDragEnd != null) {
-      opts.onDragEnd(e);
+  void _onTrackEnd(dom.CustomEvent event) {
+    if (_dragOptions.onDragEnd != null) {
+      _dragOptions.onDragEnd(event);
     }
 
-    if (opts.fireDragEvents) {
-      for (final target in currentTargets) {
-        target.dispatchEvent(new dom.CustomEvent('designer-drag-drop',
-            detail: {'detail': _detail(e)}));
+    if (_dragOptions.fireDragOverEvents) {
+      for (final target in _currentTargets) {
+        target.dispatchEvent(new dom.CustomEvent('bwu-drag-drop',
+            detail: {'detail': _detail(event)}));
       }
-      currentTargets = null;
+      _currentTargets = new Set<dom.Element>();
     }
   }
-
-  void _onMouseOver(dom.MouseEvent e) {}
 
   int x = 0;
   void _updateDragProxy(dom.Element proxy, dom.Rectangle<int> bounds) {
-//        var style = this.$.proxy.style;
-  if(bounds.width == 0) {
-    print('x');
-  }
+//    print('updateDragProxy(${bounds.top}, ${bounds.left}, ${bounds.height}, ${bounds.width})');
     proxy.style
-//      ..display = 'block'
       ..top = '${bounds.top}px'
       ..left = '${bounds.left}px'
       ..width = '${bounds.width}px'
       ..height = '${bounds.height}px';
-    print(
-        'proxy: top: ${bounds.top}, left: ${bounds.left}, width: ${bounds.width}, height: ${bounds.height}');
   }
 
   @reflectable
-  dragHandler(dom.CustomEvent event, [_]) {
+  void trackEventHandler(dom.CustomEvent event, [_]) {
     dom.Element dragProxy;
-    print(event.detail['state']);
+    dom.Element dragOriginal;
+    String oldUserSelect;
+//    print(event.detail['state']);
     switch (event.detail['state']) {
       case 'start':
+        oldUserSelect = dom.document.body.style.getPropertyValue('user-select');
+        dom.document.body.style.userSelect = 'none';
+        dragOriginal = event.target;
+        final originalDimension =
+            dragOriginal.getBoundingClientRect() as dom.Rectangle<int>;
         dragProxy = createDragProxy(event.target, stripMargins: true);
-        _updateDragProxy(
-            dragProxy, (event.target as dom.Element).getBoundingClientRect());
+        dragProxy.style
+          ..opacity = '0.75'
+          ..border = 'dotted 2px darkgray';
+
+        _updateDragProxy(dragProxy, originalDimension);
         dom.document.body.append(dragProxy);
-        startDrag(
-            event.detail['x'],
-            event.detail['y'],
-            (event.target as dom.Element).clientLeft,
-            (event.target as dom.Element).clientTop,
+        startDrag(event.detail['x'], event.detail['y'], originalDimension.left,
+            originalDimension.top,
             dragOptions: (new DragOptions()
-              ..fireDragEvents = true
-              ..onDragMove = ((x, y, detail) {
-                print('dragMove');
-                _updateDragProxy(
-                    dragProxy,
-                    new dom.Rectangle<int>(
-                        x,
-                        y,
-                        (this as dom.Element).offsetWidth,
-                        (this as dom.Element).offsetHeight));
+              ..fireDragOverEvents = true
+              ..onDragMove = ((int x, int y, dom.CustomEvent e) {
+//                print('dragMove');
+                final bounds = dragOriginal.getBoundingClientRect();
+                _updateDragProxy(dragProxy,
+                    new dom.Rectangle<int>(x, y, bounds.width, bounds.height));
               })
-              ..onDragEvents = ((e) => print('dragEvents'))
-              ..onDragEnd = ((e) {
-                print('dragEnd');
+              ..onDragEnd = ((dom.CustomEvent e) {
+//                print('dragEnd');
                 dragProxy.remove();
               })
-              ..dropTargetCheck = ((e) => e != this)));
+              ..dropTargetCheck = ((dom.Element e) => e != this && e.attributes['my-drop-target'] == 'true')));
         break;
       case 'track':
-        _onMouseMove(event);
+        _onTrack(event);
         set('message',
             'Tracking in progress... ${event.detail['x']},  ${event.detail['y']}');
         break;
       case 'end':
-        _onMouseUp(event);
+        dom.document.body.style.userSelect = oldUserSelect;
+        _onTrackEnd(event);
         set('message', 'Tracking ended!');
         break;
     }
   }
 
-   /// Starts a mouse drag operation.
-   ///
-   /// Given an initial client position at (clientX, clientY) and an
-   /// initial drag position (startX, startY), onMove is called with new
-   /// drag position.
+  /// Starts a mouse drag operation.
+  ///
+  /// Given an initial client position at (clientX, clientY) and an
+  /// initial drag position (startX, startY), onMove is called with new
+  /// drag position.
   void startDrag(int startX, int startY, int clientX, int clientY,
       {DragOptions dragOptions}) {
     this._dragOptions = dragOptions;
@@ -180,34 +181,7 @@ abstract class DraggableBehavior implements PolymerBase {
     _startY = startY;
     _clientX = clientX;
     _clientY = clientY;
-
-//      let onDragMove = opts.onDragMove;
-//      let onDragEnd = opts.onDragEnd;
-//      let fireDragEvents = opts.fireDragEvents || false;
-//      let data = opts.data;
-
-    // Because receivers can mutate events, we create a new detail for each
-    // event we fire. This is important for dragging where a receiver might
-    // send data back via the event.
-
-//      if(_mouseMoveSubscription != null) {
-//        _mouseMoveSubscription.cancel();
-//        _mouseMoveSubscription = null;
-//      }
-//      if(_mouseUpSubscription != null) {
-//        _mouseUpSubscription.cancel();
-//        _mouseUpSubscription = null;
-//      }
-//      if(_contextMenuSubscription != null) {
-//        _contextMenuSubscription.cancel();
-//        _contextMenuSubscription = null;
-//      }
-//
-//      _mouseMoveSubscription = dom.window.on['mousemove'].listen(_onMouseMove);
-//      _mouseUpSubscription = dom.window.on['mouseup'].listen(_onMouseUp);
-//      // Note document instead of window:
-//      // http://www.quirksmode.org/dom/events/contextmenu.html
-//      _contextMenuSubscription = dom.document.on['contextmenu'].listen(_onMouseUp);
+//    print('startDrag: startX: ${_startX}, startY: ${_startY}, clientX: ${_clientX}, clientY: ${_clientY}');
   }
 
   /// Deep clones a node, only copying visible nodes and inlining all computed
@@ -228,12 +202,11 @@ abstract class DraggableBehavior implements PolymerBase {
         clone = element.ownerDocument.createElement('div');
       }
       for (final attr in element.attributes.keys
-          .where((key) => element.attributes[key] != null)) {
+          .where((String key) => element.attributes[key] != null)) {
         clone.attributes[attr] = element.attributes[attr];
       }
+      clone.attributes.remove('id');
       // TODO(zoechi) figure out how to do that in Dart
-//      final properties = style.lengthcss.getStyleProperties(style);
-//      final styleText = Object.keys(properties)
       for (int i = 0; i < style.length; i++) {
         final propertyName = style.item(i);
 
@@ -245,8 +218,6 @@ abstract class DraggableBehavior implements PolymerBase {
       clone.style
         ..display = 'block'
         ..position = 'absolute';
-//        .join('; ');
-//      clone.attributes['style'] = styleText;
       for (int i = 0; i < node.childNodes.length; i++) {
         final child = createDragProxy(node.childNodes[i]);
         if (child != null) {
@@ -259,10 +230,10 @@ abstract class DraggableBehavior implements PolymerBase {
     return null;
   }
 
-  //
   // returns a list of all elements under the cursor
   // source from https://gist.github.com/oslego/7265412
-  //
+  // TODO(zoechi) disabling and enabling `pointer-events` seems to break
+  // polymer-gestures
   List<dom.Element> elementsFromPoint(int x, int y) {
     final List<dom.Element> elements = [];
     final List<Map> previousPointerEvents = [];
