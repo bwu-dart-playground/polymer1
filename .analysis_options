@@ -1,0 +1,4 @@
+analyzer:
+  exclude:
+    - '_template/**'
+    - '_bugs/_not_reproducible/**'
