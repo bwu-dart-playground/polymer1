@@ -3,15 +3,6 @@ import 'dart:html' as dom;
 import 'package:polymer/polymer.dart';
 
 class DragOptions {
-  /// Called for track events with status == 'track' (while an element is dragged).
-  /// The current pointer position (`x`, `y`) and the original track event are
-  /// passed as arguments.
-  DragMoveCallback onDragMove;
-
-  /// Called for track events with status == 'end'. The original track event is
-  /// passed as argument.
-  DragEndCallback onDragEnd;
-
   /// Fire `bwu-drag-enter`, `bwu-drag-over`, `bwu-drag-leave`, and
   /// `bwu-drag-drop` events on valid drop-targets (dragged over elements where
   /// [dropTargetCheck] returns `true`).
@@ -21,15 +12,14 @@ class DragOptions {
   /// candidates.
   Object data;
 
-  /// Called for dragged-over elements, to evaluate whether the element is a
-  /// valid drop target and fire `bwu-drag-enter`, `bwu-drag-over`,
-  /// `bwu-drag-leave` and `bwu-drag-drop`.
-  DropTargetCheck dropTargetCheck;
-
   /// If `lockUserSelectOnElement` is not `null` the values `style.userSelect`
   /// value will be set to `none` on  `dragStart` and restored to the original
   /// value on `dragEnd` to prevent text selection during drag-n-drop.
   dom.Element lockUserSelectOnElement;
+
+  String cursorDrag = 'move';
+  String cursorNoDrop = 'no-drop';
+  String cursorDropTarget = 'move';
 }
 
 typedef void DragMoveCallback(int x, int y, dom.CustomEvent event);
@@ -38,67 +28,77 @@ typedef bool DropTargetCheck(dom.Element target);
 
 typedef void DragEndCallback(dom.CustomEvent event);
 
-abstract class DraggableBehavior implements PolymerBase {
+@behavior
+abstract class DraggableBehavior implements PolymerBase, dom.Element {
   /// Elements below current drag position
-  Set<dom.Element> _currentTargets = new Set<dom.Element>();
+  Set<_HoverElement> _currentTargets = new Set<_HoverElement>();
 
   DragOptions _dragOptions;
 
-  /// The position of the dragSource element when dragging was started.
+  /// The position of the dragSource element when dragging was started used to
+  /// calc the delta from the original position.
   int _clientX;
   int _clientY;
+
+  dom.Element _dragProxy;
+  dom.Rectangle<int> _dragSourceDimension;
 
   /// Lock `user-select` of [_dragOptions.lockUserSelectOnElement] on trackStart
   /// and restore the original value on trackEnd.
   String _oldUserSelect;
   String _oldUserSelectPriority;
+  _HoverElement _currentHoverElement;
 
   /// Creates a [Map] from a track event to be passed as `detail` for events
   /// fired on drop targets.
-  Map _detail(CustomEventWrapper e) => ({
+  Map _detail(dom.CustomEvent e) => ({
         'clientX': e.detail['x'],
         'clientY': e.detail['y'],
         'data': _dragOptions.data,
       });
 
-  void onBwuDragStart() {}
-  void onBwuDragOver() {}
-  void onBwuDragCancel() {}
-  void onBwuDrop() {}
+  /// Prepare and start drag operation.
+  void onBwuDragStart() {
+    _dragSourceDimension = this.getBoundingClientRect() as dom.Rectangle<int>;
+    _dragProxy = createDragProxy(this, stripMargins: true);
+    _dragProxy.style
+      ..opacity = '0.75'
+      ..border = 'dotted 2px darkgray';
+    _updateDragProxy(_dragProxy, _dragSourceDimension);
+    dom.document.body.append(_dragProxy);
+
+    startDrag(_dragSourceDimension.left, _dragSourceDimension.top,
+        dragOptions: (new DragOptions()
+          ..data = this
+          ..lockUserSelectOnElement = dom.document.body
+          ..fireDragOverEvents = true));
+  }
+
+  bool onBwuDragOver(dom.CustomEvent event, dom.Element element) {
+    return element != this && element.attributes.containsKey('my-drop-target');
+  }
+
+  void onBwuDragEnd(dom.CustomEvent event, dom.Element dropTarget) {
+    _dragProxy.remove();
+  }
+
+  void onBwuDragMove(int x, int y, dom.CustomEvent e) {
+    _updateDragProxy(
+        _dragProxy,
+        new dom.Rectangle<int>(
+            x, y, _dragSourceDimension.width, _dragSourceDimension.height));
+  }
+
+  void attached() {
+    super.attached();
+    listen(this, 'track', 'dragHandler');
+  }
 
   @reflectable
-  void trackEventHandler(dom.CustomEvent event, [_]) {
-    dom.Element dragSource;
-    dom.Element dragProxy;
+  void dragHandler(dom.CustomEvent event, [_]) {
     switch (event.detail['state']) {
       case 'start':
-        dragSource = event.target;
-
-        final dragSourceDimension =
-            dragSource.getBoundingClientRect() as dom.Rectangle<int>;
-        dragProxy = createDragProxy(event.target, stripMargins: true);
-        dragProxy.style
-          ..opacity = '0.75'
-          ..border = 'dotted 2px darkgray';
-        _updateDragProxy(dragProxy, dragSourceDimension);
-        dom.document.body.append(dragProxy);
-
-        startDrag(dragSourceDimension.left, dragSourceDimension.top,
-            dragOptions: (new DragOptions()
-              ..data = dragSource
-              ..lockUserSelectOnElement = dom.document.body
-              ..fireDragOverEvents = true
-              ..onDragMove = ((int x, int y, dom.CustomEvent e) {
-                _updateDragProxy(
-                    dragProxy,
-                    new dom.Rectangle<int>(x, y, dragSourceDimension.width,
-                        dragSourceDimension.height));
-              })
-              ..onDragEnd = ((dom.CustomEvent e) {
-                dragProxy.remove();
-              })
-              ..dropTargetCheck = ((dom.Element e) =>
-                  e != this && e.attributes['my-drop-target'] == 'true')));
+        onBwuDragStart();
         break;
       case 'track':
         _onTrack(event);
@@ -120,7 +120,6 @@ abstract class DraggableBehavior implements PolymerBase {
           .getPropertyPriority('user-select');
       dragOptions.lockUserSelectOnElement.style.userSelect = 'none';
     }
-
   }
 
   /// Deep clones a node, only copying visible nodes and inlining all computed
@@ -175,36 +174,57 @@ abstract class DraggableBehavior implements PolymerBase {
     final deltaX = event.detail['dx'] + _clientX;
     final deltaY = event.detail['dy'] + _clientY;
 
-    if (_dragOptions.onDragMove != null) {
-      _dragOptions.onDragMove(deltaX, deltaY, event);
+    onBwuDragMove(deltaX, deltaY, event);
+
+    final _newHoverElement = event.detail['hover']();
+    if (_currentHoverElement == null) {
+      _currentHoverElement = new _HoverElement(_newHoverElement);
+    } else {
+      if (_newHoverElement != _currentHoverElement.element) {
+        _currentHoverElement.restore();
+        _currentHoverElement = new _HoverElement(_newHoverElement);
+      }
+    }
+    if (_currentHoverElement != null) {
+      final isValidDropTarget =
+          _dragOptions == null || onBwuDragOver(event, _newHoverElement);
+      if (isValidDropTarget && _dragOptions.cursorDropTarget != null) {
+        _currentHoverElement.setCursor(_dragOptions.cursorDropTarget);
+      } else {
+        if (_dragOptions.cursorNoDrop != null) {
+          _currentHoverElement.setCursor(_dragOptions.cursorNoDrop);
+        } else if (_dragOptions.cursorDrag != null) {
+          _currentHoverElement.setCursor(_dragOptions.cursorDrag);
+        }
+      }
     }
 
     if (_dragOptions.fireDragOverEvents) {
       // e.detail['hover']()` only returns one (the top most hovered element)
       // `elementsFromPoint` is supposed to return all elements below the
       // current pointer position even those covered by other elements.
-      final dropTargets = [event.detail['hover']()]
+      final dropTargets = <_HoverElement>[_currentHoverElement]
           .where(
 //          elementsFromPoint(event.detail['x'], event.detail['y']).where(
-              (dom.Element t) => t != null &&
-                  (_dragOptions == null || _dragOptions.dropTargetCheck(t)))
-          .toList() as List<dom.Element>;
+              (_HoverElement t) => t != null &&
+                  (_dragOptions == null || onBwuDragOver(event, t.element)))
+          .toList();
 
-      final newTargets = new Set<dom.Element>.from(dropTargets);
+      final newTargets = new Set<_HoverElement>.from(dropTargets);
 
       for (final target in _currentTargets) {
         if (!newTargets.contains(target)) {
-          target.dispatchEvent(new dom.CustomEvent('bwu-drag-leave',
+          target.element.dispatchEvent(new dom.CustomEvent('bwu-drag-leave',
               detail: {'detail': _detail(event)}));
         }
       }
 
       for (final target in dropTargets) {
         if (!_currentTargets.contains(target)) {
-          target.dispatchEvent(new dom.CustomEvent('bwu-drag-enter',
+          target.element.dispatchEvent(new dom.CustomEvent('bwu-drag-enter',
               detail: {'detail': _detail(event)}));
         }
-        target.dispatchEvent(new dom.CustomEvent('bwu-drag-move',
+        target.element.dispatchEvent(new dom.CustomEvent('bwu-drag-move',
             detail: {'detail': _detail(event)}));
       }
 
@@ -214,9 +234,8 @@ abstract class DraggableBehavior implements PolymerBase {
 
   /// Finish drag operation.
   void _onTrackEnd(dom.CustomEvent event) {
-    if (_dragOptions.onDragEnd != null) {
-      _dragOptions.onDragEnd(event);
-    }
+    onBwuDragEnd(event,
+        _currentTargets.isNotEmpty ? _currentTargets.first.element : null);
 
     if (_dragOptions.lockUserSelectOnElement != null) {
       _dragOptions.lockUserSelectOnElement.style.userSelect = _oldUserSelect;
@@ -226,10 +245,11 @@ abstract class DraggableBehavior implements PolymerBase {
 
     if (_dragOptions.fireDragOverEvents) {
       for (final target in _currentTargets) {
-        target.dispatchEvent(new dom.CustomEvent('bwu-drag-drop',
+        target.element.dispatchEvent(new dom.CustomEvent('bwu-drag-drop',
             detail: {'detail': _detail(event)}));
       }
-      _currentTargets = new Set<dom.Element>();
+      _currentHoverElement.restore();
+      _currentTargets = new Set<_HoverElement>();
     }
   }
 
@@ -275,5 +295,43 @@ abstract class DraggableBehavior implements PolymerBase {
 
     // return our results
     return elements;
+  }
+}
+
+class _HoverElement {
+  final dom.Element element;
+  String oldCursor;
+  String oldCursorPriority;
+  _HoverElement(this.element) {
+    if (element == null) {
+      return;
+    }
+    oldCursor = element.style.cursor;
+    oldCursorPriority = element.style.getPropertyPriority('cursor');
+  }
+
+  void restore() {
+    if (element == null) {
+      return;
+    }
+    element.style.setProperty('cursor', oldCursor, oldCursorPriority);
+  }
+
+  void setCursor(String cursor) {
+    if (element == null) {
+      return;
+    }
+    element.style.cursor = cursor;
+  }
+
+  @override
+  int get hashCode => element.hashCode;
+
+  @override
+  bool operator ==(other) {
+    if (other is! _HoverElement) {
+      return false;
+    }
+    return element == other.element;
   }
 }
