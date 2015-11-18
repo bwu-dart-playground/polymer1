@@ -10,7 +10,7 @@ import 'package:polymer/polymer.dart';
 class AppElement extends PolymerElement {
   AppElement.created() : super.created();
 
-  ready() {
+  void ready() {
     on['syntax-highlight'].listen(print);
     fire('syntax-highlight', detail: {'detail': 'xxx'});
   }

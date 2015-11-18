@@ -22,13 +22,13 @@ class GridElement extends PolymerElement {
 
   @Property(observer: 'rebuildGrid') List<List> data;
 
-  ready() {
-    print('ready: ${$['grid'].offsetTop}');
+  void ready() {
+    print('ready: ${($['grid'] as dom.Element).offsetTop}');
   }
 
   @reflectable
   void printTop([_, __]) {
-    print('ready: ${$['grid'].offsetTop}');
+    print('ready: ${($['grid'] as dom.Element).offsetTop}');
     rebuildGrid();
   }
 
@@ -92,7 +92,7 @@ class GridElement extends PolymerElement {
           colNum = 0;
           for (final colConfig in columnConfig) {
             final colHtml = new dom.DivElement()
-              ..text = row[colNum]?.toString() ?? ''
+              ..text = (row[colNum] as Object)?.toString() ?? ''
               ..classes.addAll(<String>['cell', 'l$colNum', 'r$colNum']
                 ..addAll(colConfig.cssClasses));
             rowHtml.append(colHtml);

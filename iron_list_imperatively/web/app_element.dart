@@ -20,7 +20,7 @@ class AppElement extends PolymerElement {
   List<Foo> _data = <Foo>[new Foo('alpha'), new Foo('beta'), new Foo('gamma')];
 
   @reflectable
-  selectedChanged([oldVal, newVal]) {
+  void selectedChanged([oldVal, newVal]) {
     print(newVal);
   }
 

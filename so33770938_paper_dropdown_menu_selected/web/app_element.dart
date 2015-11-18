@@ -13,9 +13,9 @@ import 'package:polymer_elements/paper_item.dart';
 class AppElement extends PolymerElement {
   AppElement.created() : super.created();
 
-  @property var selectedItem;
+  @property Object selectedItem;
 
-  @property var selectedItemLabel;
+  @property Object selectedItemLabel;
 
   @Property(computed: 'getSelectedItemValue(selectedItem)')
   String selectedItemValue;

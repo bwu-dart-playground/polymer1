@@ -75,7 +75,7 @@ abstract class DraggableBehavior implements PolymerBase, dom.Element {
   }
 
   bool onBwuDragOver(dom.CustomEvent event, dom.Element element) {
-    return element != this && element.attributes.containsKey('my-drop-target');
+    return element != this && element.attributes.containsKey('bwu-drop-target');
   }
 
   void onBwuDragEnd(dom.CustomEvent event, dom.Element dropTarget) {

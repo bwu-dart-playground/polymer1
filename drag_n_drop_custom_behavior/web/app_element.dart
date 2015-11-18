@@ -14,10 +14,10 @@ class AppElement extends PolymerElement {
   @property String message;
 
   void ready() {
-    new PolymerDom(this.root).querySelectorAll('[my-drop-target]').forEach((dom.Element e) {
-      e.on['bwu-drag-enter'].listen((dom.Event event) => (event.target as dom.Element).classes.add('drag-over'));
-      e.on['bwu-drag-leave'].listen((dom.Event event) => (event.target as dom.Element).classes.remove('drag-over'));
-      e.on['bwu-drag-drop'].listen((dom.Event event) => (event.target as dom.Element).classes.add('drag-dropped'));
+    new PolymerDom(this.root).querySelectorAll('[bwu-drop-target]').forEach((dom.Element e) {
+      e.on['bwu-drag-enter'].listen((dom.Event event) => (event.target as dom.Element).classes.add('bwu-drag-over'));
+      e.on['bwu-drag-leave'].listen((dom.Event event) => (event.target as dom.Element).classes.remove('bwu-drag-over'));
+      e.on['bwu-drag-drop'].listen((dom.Event event) => (event.target as dom.Element).classes.add('bwu-drag-dropped'));
     });
   }
 
