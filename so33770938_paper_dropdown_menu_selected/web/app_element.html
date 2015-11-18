@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<dom-module id='app-element'>
+  <template>
+    <paper-dropdown-menu label = "Suffix"
+                         selected-item="{{selectedItem}}">
+      <paper-menu class = "dropdown-content">
+        <template id="ddmtr" is="dom-repeat"
+                  items="[[suffixes]]"
+                  as="suffix">
+          <paper-item label="suffix">[[suffix]]</paper-item>
+        </template>
+      </paper-menu>
+    </paper-dropdown-menu>
+    <div>selectedItem:<span>[[selectedItem]]</span> value: <span>[[selectedItemValue]]</span></div>
+
+    <paper-dropdown-menu label = "Suffix"
+                         selected-item-label="{{selectedItemLabel}}">
+      <paper-menu class = "dropdown-content">
+        <template is="dom-repeat"
+                  items="[[suffixes]]"
+                  as="suffix">
+          <paper-item>[[suffix]]</paper-item>
+          <!-- <paper-item label="suffix">[[suffix]]</paper-item>-->
+        </template>
+      </paper-menu>
+    </paper-dropdown-menu>
+    <div>selectedItemLabel:<span>[[selectedItemLabel]]</span></div>
+  </template>
+</dom-module>
