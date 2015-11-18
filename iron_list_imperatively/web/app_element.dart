@@ -45,13 +45,8 @@ class AppElement extends PolymerElement {
 //    (Polymer.dom($['placeholder']) as PolymerDom).querySelectorAll('iron-list')
     list
       ..selectionEnabled = true
-      ..on['selected-item-changed'].listen((e) {
+      ..on['selected-item-changed'].listen((dom.CustomEvent e) {
         print(e);
       });
-  }
-
-  @reflectable
-  void activateHandler(dom.CustomEvent e, [_]) {
-    print((e.detail.data as Foo).name);
   }
 }
