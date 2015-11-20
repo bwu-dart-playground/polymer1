@@ -1,5 +1,5 @@
 @HtmlImport('app_element.html')
-library nested_repeat.web.app_element;
+library dom_repeat_model.web.app_element;
 
 import 'dart:html' as dom;
 import 'package:web_components/web_components.dart' show HtmlImport;

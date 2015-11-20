@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<dom-module id='app-element'>
+  <template>
+    <button on-tap="tapHandler">click</button>
+    <div>full: <span>[[doc.data.oe.oe_lines.#0.ordered_quantity]]</span></div>
+    <div>work: <span>[[doc.data.oe.oe_lines.#0.ordered_quantity]]</span></div>
+
+    <div>other:
+      <div>[[data.name]]</div>
+      <div>[[data.address.street]]</div>
+    </div>
+  </template>
+</dom-module>

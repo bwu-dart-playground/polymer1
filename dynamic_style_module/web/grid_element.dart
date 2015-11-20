@@ -18,9 +18,9 @@ class GridElement extends PolymerElement {
 
   @Property(observer: 'themeChanged') String theme;
 
-  @Property(observer: 'rebuildGrid') List<ColumnConfig> columnConfig;
+  @property List<ColumnConfig> columnConfig;
 
-  @Property(observer: 'rebuildGrid') List<List> data;
+  @property List<List> data;
 
   void ready() {
     print('ready: ${($['grid'] as dom.Element).offsetTop}');
@@ -48,7 +48,7 @@ class GridElement extends PolymerElement {
     rebuildGrid();
   }
 
-  @reflectable
+  @Observe('columnConfig,data')
   void rebuildGrid([_, __]) {
     try {
       final grid = new PolymerDom($['grid']);

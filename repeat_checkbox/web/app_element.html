@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<dom-module id='app-element'>
+  <template>
+    <template is="dom-repeat" items="[[data]]">
+      <div>
+        <input type="checkbox" checked="{{item.checked::change}}"><span>[[item.name]]</span>
+      </div>
+    </template>
+  </template>
+</dom-module>

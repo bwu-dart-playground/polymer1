@@ -1,11 +1,10 @@
-library dom_repeat_model.web;
+library repeat_checkbox.web;
 
-//import 'dart:html';
 import 'package:polymer/polymer.dart';
 import 'app_element.dart';
 
 /// [AppElement]
-main() async {
+dynamic main() async {
   await initPolymer();
 }
 
