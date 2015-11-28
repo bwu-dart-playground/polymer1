@@ -1,10 +1,10 @@
-library map_update_value.web;
+library so33931432_hide_paper_dropdown.web;
 
 import 'package:polymer/polymer.dart';
 import 'app_element.dart';
 
 /// [AppElement]
-dynamic main() async {
+main() async {
   await initPolymer();
 }
 

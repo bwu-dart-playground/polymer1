@@ -1,11 +1,11 @@
-name: so33770938_paper_dropdown_menu_selected
+name: so33950951_style_validation_error
 environment:
   sdk: ">=1.2.0 <2.0.0"
 
 dependencies:
   polymer: ^1.0.0-rc.2
   polymer_elements: ^1.0.0-rc.2
-  reflectable: '>=0.3.2<0.3.4'
+  reflectable: ^0.3.2
   web_components: ^0.12.0
 
 dev_dependencies:

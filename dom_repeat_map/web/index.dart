@@ -1,10 +1,10 @@
-library map_update_value.web;
+library dom_repeat_map.web;
 
 import 'package:polymer/polymer.dart';
 import 'app_element.dart';
 
 /// [AppElement]
-dynamic main() async {
+main() async {
   await initPolymer();
 }
 

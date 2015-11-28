@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<dom-module id='error-tooltip'>
+  <template>
+    <style>
+      :host {
+        display: inline-block;
+        visibility: hidden;
+        border: 3px solid red;
+        left:0;
+        right:0;
+      }
+
+      :host([invalid]) {
+        visibility: visible;
+      }
+
+    </style>
+    yyy<span>[[invalid]]</span>
+    <paper-tooltip>
+      <paper-icon icon="icons:bug-report"></paper-icon><content></content>
+    </paper-tooltip>
+  </template>
+</dom-module>
