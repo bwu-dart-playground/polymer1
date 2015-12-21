@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<dom-module id="app-element">
+  <template>
+    <style>
+      :host {
+        display: block;
+        border: solid 1px red;
+        padding: 10px;
+      }
+    </style>
+    <button on-tap="printSelected"></button>
+    <select-checkbox-menu items="{{items}}" label-attr="name"></select-checkbox-menu>
+    <select-checkbox-menu items="{{items2}}" label-attr="name"></select-checkbox-menu>
+  </template>
+</dom-module>

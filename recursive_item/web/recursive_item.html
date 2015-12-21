@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<dom-module id="recursive_item">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <template is="dom-if" if="[[computeHasChildren(item)]]">
+      root-if
+      <div>property: [[item.other.name]]</div>
+      <div>computed: [[computeName(item)]]</div>
+
+      <recursive-item item="[[arrayItem(item.children.*,0)]]"></recursive-item>
+
+    </template>
+
+    <template is="dom-if" if="[[!computeHasChildren(item)]]">
+       child-if
+       <div>property: [[item.other.name]]</div>
+       <div>computed: [[computeName(item)]]</div>
+     </template>
+
+   </template>
+</dom-module>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<dom-module id='select-checkbox-menu'>
+  <template>
+    <style>
+      paper-input {
+        --paper-input-container: {
+          padding: 0 5px 0 5px;
+        }
+      }
+      [icon=search] {
+        color: gray;
+        @apply(--select-checkbox-menu-filter-search-icon);
+      }
+    </style>
+    <paper-button on-tap="open" class="dropdown-trigger">My dropdown</paper-button>
+      <iron-dropdown id="dropdown">
+        <paper-material class="dropdown-content">
+        <paper-input value="{{filterValue}}">
+          <iron-icon suffix icon="search"></iron-icon>
+        </paper-input>
+        <paper-menu multi>
+          <template id="repeat" is="dom-repeat" items="{{items}}" filter="{{filter(filterValue)}}">
+            <paper-item role="menuitemcheckbox" toggles="true" active="{{item.checked}}">
+              <paper-checkbox checked="[[item.checked]]" checked-changed="checkedChanged"></paper-checkbox>
+              [[label(item)]]
+            </paper-item>
+          </template>
+        </paper-menu>
+      </paper-material>
+    </iron-dropdown>
+  </template>
+</dom-module>
