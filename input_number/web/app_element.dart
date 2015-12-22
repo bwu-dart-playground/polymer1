@@ -1,5 +1,5 @@
 @HtmlImport('app_element.html')
-library _template.web.app_element;
+library input_number.web.app_element;
 
 import 'dart:html' as dom;
 import 'package:web_components/web_components.dart' show HtmlImport;
@@ -23,7 +23,7 @@ abstract class InputConverterBehavior implements PolymerBase {
   @reflectable
   void convertToInt(dom.Event e, _) {
     final input = (e.target as dom.NumberInputElement);
-    double value = input.valueAsNumber;
+    num value = input.valueAsNumber;
     int intValue =
         value == value.isInfinite || value.isNaN ? null : value.toInt();
     notifyPath(input.attributes['notify-path'], intValue);

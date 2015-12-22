@@ -1,8 +1,9 @@
-name: _template
+name: input_number
 environment:
   sdk: ">=1.2.0 <2.0.0"
 
 dependencies:
+  analyzer: 0.27.1
   polymer: ^1.0.0-rc.10
   polymer_elements: ^1.0.0-rc.2
   reflectable: ^0.5.0

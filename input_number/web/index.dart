@@ -1,4 +1,4 @@
-library _template.web;
+library input_number.web;
 
 //import 'dart:html';
 import 'package:polymer/polymer.dart';
