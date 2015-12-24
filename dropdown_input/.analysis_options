@@ -1,0 +1,49 @@
+analyzer:
+  strong-mode: true
+  language:
+    enableSuperMixins: true
+# See https://github.com/dart-lang/sdk/blob/master/pkg/analyzer/lib/src/task/strong/info.dart#L497
+# for all recognized errors
+#  errors:
+#    strong_mode_static_type_error: false
+#    strong_mode_assignment_cast: false
+#    strong_mode_down_cast_composite: false
+#    strong_mode_down_cast_implicit: false
+#    strong_mode_dynamic_cast: false
+#    strong_mode_dynamic_invoke: false
+#    strong_mode_inferred_type: false
+#    strong_mode_inferred_type_allocation: false
+#    strong_mode_inferred_type_closure: false
+#    strong_mode_inferred_type_literal: false
+#    strong_mode_invalid_field_override: false
+#    strong_mode_invalid_method_override: false
+#    strong_mode_invalid_parameter_declaration: false
+#    strong_mode_invalid_super_invocation: false
+#    strong_mode_invalid_variable_declaration: false
+#    strong_mode_non_ground_type_check_info: false
+#    strong_mode_static_type_error: false
+#    strong_mode_uninferred_closure: false
+linter:
+  rules:
+    - always_declare_return_types
+    - always_specify_types
+#    - avoid_as
+    - camel_case_types
+    - constant_identifier_names
+    - empty_constructor_bodies
+    - implementation_imports
+    - library_names
+    - library_prefixes
+    - non_constant_identifier_names
+    - one_member_abstracts
+    - package_api_docs
+    - package_prefixed_library_names
+    - prefer_is_not_empty
+    - slash_for_doc_comments
+    - super_goes_last
+    - type_annotate_public_apis
+    - type_init_formals
+#    - unnecessary_brace_in_string_interp
+    - unnecessary_getters_setters
+    - package_names
+
