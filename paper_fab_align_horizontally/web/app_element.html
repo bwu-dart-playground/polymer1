@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<dom-module id="app-element">
+  <template>
+    <style>
+      paper-fab.css {
+        display: inline-block;
+      }
+    </style>
+    <paper-fab class="css" mini icon='arrow-forward' on-click='onClickForward'></paper-fab>
+    <paper-fab class="css" mini icon='arrow-backward' on-click='onClickBackward'></paper-fab>
+    <div>
+      <span>
+        <paper-fab mini icon='arrow-forward' on-click='onClickForward'></paper-fab>
+      </span>
+      <span>
+        <paper-fab mini icon='arrow-backward' on-click='onClickBackward'></paper-fab>
+      </span>
+    </div>
+  </template>
+</dom-module>

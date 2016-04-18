@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<dom-module id='grid-style'>
+  <template>
+    <style>
+      /*:host {*/
+        /*display: block;*/
+        /*background-color: blue;*/
+      /*}*/
+      :host::content .grid .row,
+      .grid .row,
+      :host::content .grid .header-row,
+      .grid .header-row {
+        position: absolute;
+      }
+      :host::content .grid .cell,
+      .grid .cell {
+        position: absolute;
+        display: inline-block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      /*#container {*/
+        /*display: block;*/
+      /*}*/
+    </style>
+  </template>
+</dom-module>

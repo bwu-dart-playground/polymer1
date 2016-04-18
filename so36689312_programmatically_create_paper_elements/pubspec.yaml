@@ -1,0 +1,31 @@
+name: so36689312
+environment:
+  sdk: ">=1.2.0 <2.0.0"
+
+dependencies:
+  browser: ^0.10.0
+  polymer: ^1.0.0-rc.16
+  polymer_elements: ^1.0.0-rc.8
+  reflectable: ^0.5.0
+  web_components: ^0.12.0
+
+dev_dependencies:
+  test: ^0.12.3
+
+transformers:
+- web_components:
+    entry_points:
+    - web/index.html
+
+- reflectable:
+    entry_points:
+    - web/index.dart
+
+- test/pub_serve:
+    $include: test/**_test{.*,}.dart
+
+- $dart2js:
+    minify: true
+    $include: '**/*.bootstrap.initialize.dart'
+    #$include: "**/*.polymer.bootstrap.dart"
+

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<dom-module id="app-element">
+  <template>
+    <paper-dropdown-menu
+        label="Country *"
+        selected-item-label="{{countrySelectedItemLabel}}"
+        error-message="Country is required"
+        id="countryDdm">
+      <paper-menu class="dropdown-content">
+        <template
+            is="dom-repeat"
+            items="[[countries]]"
+            as="country">
+          <div label="[[country]]">[[country]]</div>
+        </template>
+      </paper-menu>
+    </paper-dropdown-menu>
+    <div>selectedItem:<span>[[countrySelectedItemLabel]]</span> value: <span>[[countrySelectedItemLabel]]</span></div>
+    <div>hideState: <span>[[hideState]]</span></div>
+    <div class="layout horizontal">
+      <paper-dropdown-menu
+          hidden$="[[hideState]]"
+          label="State *"
+          selected-item-label="{{stateSelectedItemLabel}}"
+          id="stateDdm">
+        <paper-menu class="dropdown-content">
+          <template
+              is="dom-repeat"
+              items="[[states]]"
+              as="state">
+            <div>[[state.name]]</div>
+            <br>
+          </template>
+        </paper-menu>
+      </paper-dropdown-menu>
+    </div>
+  </template>
+</dom-module>

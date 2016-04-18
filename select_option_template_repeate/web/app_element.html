@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<dom-module id="app-element">
+  <template>
+    <select>
+      <template is="dom-repeat" items="[[countries]]">
+        <option value="[[item.isoCode]]">[[item.name]]</option>
+      </template>
+    </select>
+
+    <select>
+      <template>xxx</template>
+      <option>yyy</option>
+    </select>
+  </template>
+</dom-module>

@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+  <head>
+    <script src="packages/web_components/webcomponents-lite.min.js"></script>
+  </head>
+  <style is="style-module">
+    :root {
+      --app-element-paper-button: {
+        background-color: blue;
+        color: white;
+      };
+    }
+    app-element {
+      --app-element-paper-button: {
+        background-color: red;
+        color: green;
+      };
+    }
+  </style>
+  <body>
+    <app-element></app-element>
+    <script type="application/dart" src="index.dart"></script>
+    <script src="packages/browser/dart.js"></script>
+  </body>
+</html>

@@ -1,0 +1,16 @@
+<!doctype html>
+<html>
+  <head>
+    <script>
+      window.Polymer = window.Polymer || {};
+      window.Polymer.dom = 'shadow';
+    </script>
+    <script src="packages/web_components/webcomponents-lite.min.js"></script>
+  </head>
+  <body>
+    <div id="top"></div>
+    <app-element><div id="child1"></div><div id="child2"></div></app-element>
+    <script type="application/dart" src="index.dart"></script>
+    <script src="packages/browser/dart.js"></script>
+  </body>
+</html>

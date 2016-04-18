@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<dom-module id="app-element">
+  <template>
+    <style>
+      div.outer {
+        border: 3px solid red;
+      }
+      div.main{
+        border: 3px solid lightblue;
+      }
+      div.inner {
+        border: 1px solid lightgreen;
+      }
+
+    </style>
+    <template id="outer" is="dom-repeat" items="{{produtos}}" as="item">
+      <div>id:<span>[[item.id]]</span></div>
+      <div class="outer layout vertical" data-id$="[[item.id]]">
+        <div class="main layout horizontal">
+          <paper-input label="Produto" value="{{item.descricao}}"></paper-input>
+        </div>
+        <template is="dom-repeat" items="{{item.componentes}}" as="item_comp">
+          <div>id:<span>[[item_comp.id]]</span></div>
+          <div class="inner layout vertical" data-id$="[[item_comp.id]]">
+            <div class="layout horizontal">
+              <paper-input label="Produto Componente" value="{{item_comp.descricao}}"></paper-input>
+            </div>
+          </div>
+        </template>
+      </div>
+    </template>
+  </template>
+</dom-module>

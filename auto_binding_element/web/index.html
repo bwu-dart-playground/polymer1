@@ -1,0 +1,17 @@
+<!doctype html>
+<html>
+  <head>
+    <link rel="import" href="packages/polymer/polymer.html">
+    <script src="packages/web_components/webcomponents-lite.min.js"></script>
+  </head>
+  <body>
+    <template id="t" is="dom-bind">
+      <div>Model: <span>{{model}}</span></div>
+      <div>Say something: <input value="{{model.value::change}}"></div>
+      <div>You said: <span>{{model.value}}</span></div>
+      <button id="mybutton" on-tap="buttonTap">Tap me!</button>
+    </template>
+    <script type="application/dart" src="index.dart"></script>
+    <script src="packages/browser/dart.js"></script>
+  </body>
+</html>

@@ -1,0 +1,21 @@
+:host {
+  font-family: Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: larger;
+}
+
+paper-drawer-panel {
+  --paper-drawer-panel-drawer-container: {
+    background-color: #fff;
+  };
+  --paper-drawer-panel-main-container: {
+    background-color: #f1f1f3;
+  };
+}
+
+[main] paper-toolbar {
+  --paper-toolbar-background: #526e9c;
+}
+
+[drawer] paper-toolbar {
+  --paper-toolbar-background: #4f7dc9;
+}

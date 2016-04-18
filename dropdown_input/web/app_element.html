@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<dom-module id="app-element">
+  <template>
+    <style>
+      .dropdown-content {
+        padding: 0;
+      }
+    </style>
+
+    <paper-toolbar>
+
+      <paper-icon-button icon="mail"></paper-icon-button>
+
+      <div class="title">{{label}}</div>
+
+      <paper-menu-button horizontal-align="right" vertical-align="top">
+        <paper-icon-button icon="more-vert" class="dropdown-trigger"></paper-icon-button>
+        <div class="dropdown-content">
+          <paper-input label="Thread name:" value="{{label}}"></paper-input>
+        </div>
+      </paper-menu-button>
+    </paper-toolbar>
+  </template>
+</dom-module>

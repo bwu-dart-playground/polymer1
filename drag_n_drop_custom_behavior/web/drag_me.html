@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<dom-module id='drag-me'>
+  <template>
+    <style>
+      :host {
+        border: solid 3px lightblue;
+        display: block;
+        width: 150px;
+        height: 150px;
+        background: gray;
+        user-select: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        cursor: move;
+      }
+      div {
+        position: relative;
+        width: calc(100% - 26px);
+        height: calc(100% - 26px);
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        background-color: yellow;
+      }
+    </style>
+    <div id="some">{{message}}</div>
+  </template>
+</dom-module>

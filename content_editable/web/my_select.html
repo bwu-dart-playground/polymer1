@@ -1,0 +1,30 @@
+<dom-module id="my-select" >
+  <template>
+    <style>
+      :host {
+        display: block;
+        width: 500px;
+        height: 500px;
+      }
+/*
+      .editable {
+        display: table-cell;
+        width: 500px;
+        height: 500px;
+        border: 3px solid red;
+        background-color: #666;
+      }
+
+      .container {
+        display: table-cell;
+        width: 500px;
+        height: 500px;
+        border: 3px solid red;
+        background-color: #666;
+      }*/
+    </style>
+    <div class='container'>Show content:<span>[[text]]</span>
+      <div id="editable" contenteditable="true" on-input="inputHandler" on-blur="blurHandler">[[text]]</div>
+    </div>
+  </template>
+</dom-module>

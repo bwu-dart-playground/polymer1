@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<dom-module id="app-element">
+  <template>
+    <paper-input value="{{inp}}"> </paper-input>
+    <paper-button raised on-tap="tapHandler">add to list</paper-button>
+
+    <template is="dom-repeat" items="{{computedItems}}">
+        <div style="color:red">
+            <span>[[item.a]]</span>
+            <span>[[item.b]]</span>
+        </div>
+    </template>
+  </template>
+</dom-module>

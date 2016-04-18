@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<dom-module id="app-element">
+  <template>
+    <button on-tap="test">Click</button>
+    <template is="dom-repeat" id="firstRepeat" items="{{items}}" as="first">
+      <template is="dom-repeat" id="secondRepeat" items="{{first}}" as="second">
+        <span on-tap="test">{{second}}</span>
+      </template>
+    </template>
+  </template>
+</dom-module>

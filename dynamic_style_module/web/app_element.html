@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<dom-module id="app-element">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <button type="button" on-tap="changeThemeHandler">Change theme</button>
+
+    <grid-element theme="{{theme}}" column-config="[[columnConfig]]" data="[[data]]"></grid-element>
+  </template>
+</dom-module>

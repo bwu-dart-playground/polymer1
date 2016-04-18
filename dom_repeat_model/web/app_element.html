@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<dom-module id="app-element">
+  <template>
+    <button on-tap="test">Click</button>
+    <template is="dom-repeat" id="lista_produtos" items="{{items}}" as="item">
+       <paper-input label="Custo" value="{{item.aquisicao_custo}}"
+                    type="number" data-index$="{{index}}"
+                    on-change="calcularPrecoSugeridoEvento">
+         <div prefix>R$</div>
+       </paper-input>
+    </template>
+  </template>
+</dom-module>

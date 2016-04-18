@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<dom-module id="app-element">
+  <style include="shared-styles"></style>
+  <style>
+    :host {
+      /*display: block;*/
+      /*height: 100vh;*/
+      /*border: 1px solid red;*/
+    }
+    iron-list {
+      height: 500px;
+      /*border: 1px solid blue;*/
+    }
+    neon-animatable {
+      /*border: 1px solid green;*/
+      /*height: 500px;*/
+    }
+  </style>
+  <template>
+    <neon-animated-pages id="pages" selected="0">
+      <neon-animatable>
+        <paper-button id="list-button" raised on-tap="onOK">List</paper-button>
+      </neon-animatable>
+      <neon-animatable>
+        <iron-list id="list" items="[[data]]" as="item">
+          <template>
+            <div>
+              Name: <span>[[item.name]]</span>
+            </div>
+          </template>
+        </iron-list>
+      </neon-animatable>
+    </neon-animated-pages>
+  </template>
+</dom-module>

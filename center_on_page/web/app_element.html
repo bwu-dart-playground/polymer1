@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<!--
+ See also http://plnkr.co/edit/xIARqr?p=preview
+-->
+<dom-module id="app-element">
+  <template>
+    <style>
+      :host {
+        display: block;
+        border: 1px solid green;
+        height: 100vh;
+        @apply(--layout-horizontal);
+        @apply(--layout-center-center);
+      }
+
+      div {
+        width: 70px;
+        height: 45px;
+        border: solid 1px red;
+        /*text-align: center;*/
+        /*vertical-align: middle;*/
+      }
+    </style>
+    <div>yyy</div>
+  </template>
+</dom-module>

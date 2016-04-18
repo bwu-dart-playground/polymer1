@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<dom-module id='grid-element'>
+  <template>
+    <style>
+      :host {
+        display: block;
+        border: solid 3px blue;
+        background-color: #eaeaea;
+      }
+      /*:host ::content .grid .row,*/
+      .grid .row,
+      /*:host::content .grid .header-row,*/
+      .grid .header-row {
+        position: absolute;
+      }
+      .grid {
+        display: block;
+        height: 300px;
+        font-family: 'Roboto', sans-serif;
+        font-size: 0.7em;
+        margin: 10px;
+        border: 1px dotted darkgray;
+      }
+      :host::content .grid .cell,
+      .grid .cell {
+        position: absolute;
+        display: inline-block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    </style>
+    <div class="style-me">style-me some text</div>
+    <div>theme:<span>[[theme]]</span></div>
+
+    <div id="container">
+      <div id="grid" class="grid"></div>
+    </div>
+    <span id="placeholder"></span>
+
+    <button on-tap="printTop">update</button>
+  </template>
+</dom-module>

@@ -1,0 +1,32 @@
+<!--<!DOCTYPE html>-->
+<dom-module id="app-element">
+  <template>
+    <style>
+      :host {
+        display: block;
+        width: 300px;
+        height: 180px;
+        border: 3px solid green;
+      }
+      iron-list {
+        display: block;
+        width: 150px;
+        height: 150px;
+        border: 3px solid red;
+      }
+    </style>
+
+    <div>selected: <span>{{selected.name}}</span></div>
+    <!--<iron-list items="{{data}}" selected-item="{{selected}}" selection-enabled="true">-->
+      <!--<template>-->
+        <!--&lt;!&ndash;yyy<span>{{item.name}}<span></span>zzz&ndash;&gt;-->
+        <!--<foo-element foo="{{item}}"></foo-element>-->
+      <!--</template>-->
+    <!--</iron-list>-->
+    <iron-list id="id_list" items="{{listitem}}" as="item" selection-enabled selected-item="{{selectedItem}}">
+      <template>
+        <paper-item>{{item.shorttext}}</paper-item>
+      </template>
+    </iron-list>
+  </template>
+</dom-module>

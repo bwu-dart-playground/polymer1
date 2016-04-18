@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<link rel="import" href="packages/polymer/polymer.html">
+<dom-module id="app-element">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+
+      paper-icon-button.small {
+        --iron-icon-height: 12px;
+        --iron-icon-width: 12px;
+      }
+
+      paper-icon-button.small::shadow iron-icon {
+        padding: 15px;
+        margin: 15px;
+      }
+
+      paper-menu-button paper-icon-button {
+        --iron-icon-height: 40px;
+        --iron-icon-width: 40px;
+      }
+    </style>
+
+    <div horizontal layout>
+      <paper-icon-button class="small" icon="add-circle"></paper-icon-button>
+      <div horizontal layout center>Expand Entries</div>
+    </div>
+
+    <div horizontal layout>
+      <paper-icon-button icon="add-circle"></paper-icon-button>
+      <div horizontal layout center>Expand Entries</div>
+    </div>
+
+    <paper-menu-button icon="add-circle">
+      <paper-icon-button icon="add-circle" class="dropdown-trigger"></paper-icon-button>
+      <paper-menu class="dropdown-content">
+        <paper-item>Share</paper-item>
+        <paper-item>Settings</paper-item>
+        <paper-item>Help</paper-item>
+      </paper-menu>
+    </paper-menu-button>
+  </template>
+  <script type='application/dart' src='app_element.dart'></script>
+</dom-module>

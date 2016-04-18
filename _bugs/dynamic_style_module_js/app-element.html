@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<link rel="import"
+      href="http://www.polymer-project.org/1.0/samples/components/polymer/polymer.html">
+<link rel="import" href="my-theme.html">
+<link rel="import" href="default-theme.html">
+<link rel="import" href="grid-element.html">
+
+<dom-module id="app-element">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <button type="button" on-tap="changeThemeHandler">Change theme</button>
+
+    <grid-element theme="{{theme}}" column-config="[[columnConfig]]" data="[[data]]"></grid-element>
+    <span>[[theme]]</span>
+  </template>
+
+  <script>
+    Polymer({
+      is: "app-element",
+      properties: {
+        theme: {
+          type: String,
+          value: 'default-theme'
+        },
+        columnConfig: {
+          type: Array,
+          value: function() {
+            return [
+              {
+                name: 'Title',
+                width: 100,
+                cssClasses: ['title'],
+                headerRowCssClasses: ['header', 'first', 'title'],
+              }, {
+                name : 'Year',
+                width : 60,
+                cssClasses : ['year'],
+                headerRowCssClasses : ['header', 'year', 'align-right'],
+              }
+            ];
+          }
+        },
+        data: {
+          type: Array,
+          value: function() { return [
+            {name: 'The Dark Knight', year: 2008},
+            {name: 'Groundhog Day', year: 1993},
+            {name: 'Spectre', year: 2015}];
+          }
+        }
+      },
+      //ready: function() {
+        // set this element's owner property
+        // this.owner = "Daniel";
+      //},
+
+      changeThemeHandler: function() {
+        this.set('theme', this.theme === 'default-theme' ? 'my-theme' : 'default-theme');
+      }
+
+    });
+  </script>
+
+</dom-module>
+
+

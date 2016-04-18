@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<dom-module id="app-element">
+  <template>
+    <style>
+      :host {
+        --wide-theme: {
+          border: solid 3px red;
+        };
+
+        --narrow-theme: {
+          border: solid 3px blue;
+        };
+
+        --current-theme: var(--wide-theme);
+
+       display: block;
+       @apply(--current-theme);
+      }
+      /* TODO(zoechi) how to predefine styles for example for <paper-button> */
+    </style>
+
+    <iron-media-query query="min-width: 720px" query-matches="{{isWide}}"></iron-media-query>
+
+    <!--<paper-button>Some button</paper-button>-->
+    <div id="somediv">IsWide: <span>[[isWide]]</span></div>
+  </template>
+</dom-module>

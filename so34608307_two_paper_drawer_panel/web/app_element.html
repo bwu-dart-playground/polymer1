@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<dom-module id="app-element">
+  <template>
+    <style>
+      paper-drawer-panel {
+        width: 250px;
+      }
+    </style>
+    <paper-drawer-panel drawer force-narrow >
+      <paper-header-panel drawer>
+        <paper-toolbar>
+          <paper-icon-button icon="menu"
+                             paper-drawer-toggle></paper-icon-button>
+          <div>Title</div>
+        </paper-toolbar>
+        <div> drawer2 content...</div>
+      </paper-header-panel>
+    </paper-drawer-panel >
+
+    <paper-drawer-panel right-drawer>
+      <paper-header-panel>
+        <paper-toolbar>
+          <paper-icon-button icon="menu-vert"
+                             paper-drawer-toggle></paper-icon-button>
+        </paper-toolbar>
+        <div> main content
+        </div>
+      </paper-header-panel>
+    </paper-drawer-panel>
+  </template>
+</dom-module>
