@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<dom-module id="app-element">
+  <template>
+    <button type="button" on-tap="clickHandler">Add</button>
+    <template is="dom-repeat" items="{{someData}}">
+      <p>[[item]]</p>
+    </template>
+  </template>
+</dom-module>

@@ -1,0 +1,17 @@
+<!--<!DOCTYPE html>-->
+<dom-module id="app-element">
+  <template>
+    <style>
+      #list {
+          height: 100px;
+          width: 100px;
+      }
+    </style>
+    <iron-list items="{{items}}" id="list">
+      <template>
+        <div>{{item}}</div>
+      </template>
+    </iron-list>
+    <paper-button raised on-tap="onAdd">add</paper-button>
+  </template>
+</dom-module>
