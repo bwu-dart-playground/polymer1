@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<dom-module id="app-element">
+  <template>
+    <div>opened: <span>{{opened}}</span></div>
+    <template is="dom-if" if="{{opened}}">
+      <div>content</div>
+    </template>
+  </template>
+</dom-module>
